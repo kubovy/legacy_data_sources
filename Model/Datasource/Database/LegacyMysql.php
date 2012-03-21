@@ -28,7 +28,7 @@ App::uses('LegacyMysqlBase', 'LegacyDataSources.Model/Datasource/Database');
  * @package       cake
  * @subpackage    cake.cake.libs.model.datasources.dbo
  */
-class LegacyMysql extends LecacyMysqlBase {
+class LegacyMysql extends LegacyMysqlBase {
 
 /**
  * Datasource description
@@ -311,5 +311,9 @@ class LegacyMysql extends LecacyMysqlBase {
 			}
 		}
 		return false;
+	}
+
+	public function getSchemaName() {
+		return $this->config['database'];
 	}
 }
