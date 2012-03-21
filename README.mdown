@@ -1,4 +1,4 @@
-# Legacy DataSource Drivers for CakePHP 2.x
+# Legacy DataSource Drivers for MySQL and MySQLi for CakePHP 2.x
 
 A very quick transport of old database datasources from CakePHP 1.3 to 2.x. 
 Needed because some webhosting companies are not able to internally process
