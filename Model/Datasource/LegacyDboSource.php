@@ -1,23 +1,17 @@
 <?php
 /**
- * Dbo Source
- *
- * PHP versions 4 and 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       cake
- * @subpackage    cake.cake.libs.model.datasources
- * @since         CakePHP(tm) v 0.10.0.1076
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * Bolos Content Manager (http://bcm.poterion.com)
+ * Copyright (c) 2005-2012, Poterion (http://www.poterion.com)
+ * 
+ * @category   Datasource
+ * @package    com.poterion.BCM.Plugin.LegacyDataSources
+ * @subpackage com.poterion.BCM.Plugin.LegacyDataSources.Model.Datasource
+ * @author     Jan Kubovy <jan@kubovy.eu>
+ * @copyright  2005-2012 Copyright (c) Poterion (http://www.poterion.com)
+ * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @link       http://bcm.poterion.com Bolos CMS
+ * @since      1.0.0
  */
-
 App::import('Core', array('Set', 'String'));
 App::uses('LegacyDataSource', 'LegacyDataSources.Model/Datasource');
 
@@ -26,115 +20,120 @@ App::uses('LegacyDataSource', 'LegacyDataSources.Model/Datasource');
  *
  * Creates DBO-descendant objects from a given db connection configuration
  *
- * @package       cake
- * @subpackage    cake.cake.libs.model.datasources
+ * @category   Datasource
+ * @package    com.poterion.BCM.Plugin.LegacyDataSources
+ * @subpackage com.poterion.BCM.Plugin.LegacyDataSources.Model.Datasource
+ * @author     Jan Kubovy <jan@kubovy.eu>
+ * @copyright  2005-2012 Copyright (c) Poterion (http://www.poterion.com)
+ * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @link       http://bcm.poterion.com Bolos CMS
+ * @since      1.0.0
  */
 class LegacyDboSource extends LegacyDataSource {
 
-/**
- * Description string for this Database Data Source.
- *
- * @var string
- * @access public
- */
-	var $description = "Database Data Source";
+	/**
+	 * Description string for this Database Data Source.
+	 *
+	 * @var String
+	 */
+	public $description = "Database Data Source";
 
-/**
- * index definition, standard cake, primary, index, unique
- *
- * @var array
- */
-	var $index = array('PRI' => 'primary', 'MUL' => 'index', 'UNI' => 'unique');
+	/**
+	 * index definition, standard cake, primary, index, unique
+	 *
+	 * @var array
+	 */
+	public $index = array('PRI' => 'primary', 'MUL' => 'index', 'UNI' => 'unique');
 
-/**
- * Database keyword used to assign aliases to identifiers.
- *
- * @var string
- * @access public
- */
-	var $alias = 'AS ';
+	/**
+	 * Database keyword used to assign aliases to identifiers.
+	 *
+	 * @var String
+	 */
+	public $alias = 'AS ';
 
-/**
- * Caches result from query parsing operations.  Cached results for both DboSource::name() and
- * DboSource::conditions() will be stored here.  Method caching uses `crc32()` which is
- * fast but can collisions more easily than other hashing algorithms.  If you have problems
- * with collisions, set DboSource::$cacheMethods to false.
- *
- * @var array
- * @access public
- */
-	var $methodCache = array();
+	/**
+	 * Caches result from query parsing operations.  Cached results for both 
+	 * DboSource::name() and DboSource::conditions() will be stored here.  
+	 * Method caching uses `crc32()` which is fast but can collisions more 
+	 * easily than other hashing algorithms.  If you have problems with 
+	 * collisions, set DboSource::$cacheMethods to false.
+	 *
+	 * @var array
+	 */
+	public $methodCache = array();
 
-/**
- * Whether or not to cache the results of DboSource::name() and DboSource::conditions()
- * into the memory cache.  Set to false to disable the use of the memory cache.
- *
- * @var boolean.
- * @access public
- */
-	var $cacheMethods = true ;
+	/**
+	 * Whether or not to cache the results of DboSource::name() and 
+	 * DboSource::conditions() into the memory cache.  Set to false to disable 
+	 * the use of the memory cache.
+	 *
+	 * @var boolean.
+	 */
+	public $cacheMethods = true;
 
-/**
- * Bypass automatic adding of joined fields/associations.
- *
- * @var boolean
- * @access private
- */
-	var $__bypass = false;
+	/**
+	 * Bypass automatic adding of joined fields/associations.
+	 *
+	 * @var boolean
+	 */
+	private $__bypass = false;
 
-/**
- * The set of valid SQL operations usable in a WHERE statement
- *
- * @var array
- * @access private
- */
-	var $__sqlOps = array('like', 'ilike', 'or', 'not', 'in', 'between', 'regexp', 'similar to');
+	/**
+	 * The set of valid SQL operations usable in a WHERE statement
+	 *
+	 * @var array
+	 */
+	private $__sqlOps = array(
+		'like', 'ilike', 'or', 'not', 'in', 'between', 'regexp', 'similar to'
+	);
 
-/**
- * Index of basic SQL commands
- *
- * @var array
- * @access protected
- */
-	var $_commands = array(
+	/**
+	 * Index of basic SQL commands
+	 *
+	 * @var array
+	 */
+	protected $_commands = array(
 		'begin' => 'BEGIN',
 		'commit' => 'COMMIT',
 		'rollback' => 'ROLLBACK'
 	);
 
-/**
- * Separator string for virtualField composition
- *
- * @var string
- */
-	var $virtualFieldSeparator = '__';
+	/**
+	 * Separator string for virtualField composition
+	 *
+	 * @var String
+	 */
+	public $virtualFieldSeparator = '__';
 
-/**
- * List of table engine specific parameters used on table creating
- *
- * @var array
- * @access public
- */
-	var $tableParameters = array();
+	/**
+	 * List of table engine specific parameters used on table creating
+	 *
+	 * @var array
+	 */
+	public $tableParameters = array();
 
-/**
- * List of engine specific additional field parameters used on table creating
- *
- * @var array
- * @access public
- */
-	var $fieldParameters = array();
+	/**
+	 * List of engine specific additional field parameters used on table 
+	 * creating
+	 *
+	 * @var array
+	 */
+	public $fieldParameters = array();
 	
-	var $__associations = array('belongsTo', 'hasOne', 'hasMany', 'hasAndBelongsToMany');
+	private $__associations = array(
+		'belongsTo', 'hasOne', 'hasMany', 'hasAndBelongsToMany'
+	);
 
-/**
- * Constructor
- *
- * @param array $config Array of configuration information for the Datasource.
- * @param boolean $autoConnect Whether or not the datasource should automatically connect.
- * @access public
- */
-	function __construct($config = null, $autoConnect = true) {
+	/**
+	 * Constructor
+	 *
+	 * @param array   $config      Array of configuration information for the 
+	 *                             Datasource.
+	 * @param boolean $autoConnect Whether or not the datasource should 
+	 *                             automatically connect.
+	 */
+	public function __construct($config = null, $autoConnect = true) {
 		if (!isset($config['prefix'])) {
 			$config['prefix'] = '';
 		}
@@ -150,14 +149,14 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Reconnects to database server with optional new settings
- *
- * @param array $config An array defining the new configuration settings
- * @return boolean True on success, false on failure
- * @access public
- */
-	function reconnect($config = array()) {
+	/**
+	 * Reconnects to database server with optional new settings
+	 *
+	 * @param array $config An array defining the new configuration settings
+	 *
+	 * @return boolean True on success, false on failure
+	 */
+	public function reconnect($config = array()) {
 		$this->disconnect();
 		$this->setConfig($config);
 		$this->_sources = null;
@@ -165,20 +164,22 @@ class LegacyDboSource extends LegacyDataSource {
 		return $this->connect();
 	}
 
-/**
- * Prepares a value, or an array of values for database queries by quoting and escaping them.
- *
- * @param mixed $data A value or an array of values to prepare.
- * @param string $column The column into which this data will be inserted
- * @param boolean $read Value to be used in READ or WRITE context
- * @return mixed Prepared value or array of values.
- * @access public
- */
-	function value($data, $column = null, $read = true) {
+	/**
+	 * Prepares a value, or an array of values for database queries by quoting 
+	 * and escaping them.
+	 *
+	 * @param mixed $data A value or an array of values to prepare.
+	 * @param string $column The column into which this data will be inserted
+	 * @param boolean $read Value to be used in READ or WRITE context
+	 * @return mixed Prepared value or array of values.
+	 */
+	public function value($data, $column = null, $read = true) {
 		if (is_array($data) && !empty($data)) {
 			return array_map(
-				array(&$this, 'value'),
-				$data, array_fill(0, count($data), $column), array_fill(0, count($data), $read)
+				array(&$this, 'value'), 
+				$data, 
+				array_fill(0, count($data), $column), 
+				array_fill(0, count($data), $read)
 			);
 		} elseif (is_object($data) && isset($data->type)) {
 			if ($data->type == 'identifier') {
@@ -186,70 +187,78 @@ class LegacyDboSource extends LegacyDataSource {
 			} elseif ($data->type == 'expression') {
 				return $data->value;
 			}
-		} elseif (in_array($data, array('{$__cakeID__$}', '{$__cakeForeignKey__$}'), true)) {
+		} elseif (in_array(
+			$data, 
+			array('{$__cakeID__$}', '{$__cakeForeignKey__$}'), 
+			true
+		)) {
 			return $data;
 		} else {
 			return null;
 		}
 	}
 
-/**
- * Returns an object to represent a database identifier in a query
- *
- * @param string $identifier
- * @return object An object representing a database identifier to be used in a query
- * @access public
- */
-	function identifier($identifier) {
+	/**
+	 * Returns an object to represent a database identifier in a query
+	 *
+	 * @param string $identifier
+	 *
+	 * @return object An object representing a database identifier to be used in a query
+	 */
+	public function identifier($identifier) {
 		$obj = new stdClass();
 		$obj->type = 'identifier';
 		$obj->value = $identifier;
 		return $obj;
 	}
 
-/**
- * Returns an object to represent a database expression in a query
- *
- * @param string $expression
- * @return object An object representing a database expression to be used in a query
- * @access public
- */
-	function expression($expression) {
+	/**
+	 * Returns an object to represent a database expression in a query
+	 *
+	 * @param string $expression
+	 *
+	 * @return object An object representing a database expression to be used in
+	 *                a query
+	 */
+	public function expression($expression) {
 		$obj = new stdClass();
 		$obj->type = 'expression';
 		$obj->value = $expression;
 		return $obj;
 	}
 
-/**
- * Executes given SQL statement.
- *
- * @param string $sql SQL statement
- * @return boolean
- * @access public
- */
-	function rawQuery($sql) {
+	/**
+	 * Executes given SQL statement.
+	 *
+	 * @param string $sql SQL statement
+	 *
+	 * @return boolean
+	 */
+	public function rawQuery($sql) {
 		$this->took = $this->error = $this->numRows = false;
 		return $this->execute($sql);
 	}
 
-/**
- * Queries the database with given SQL statement, and obtains some metadata about the result
- * (rows affected, timing, any errors, number of rows in resultset). The query is also logged.
- * If Configure::read('debug') is set, the log is shown all the time, else it is only shown on errors.
- *
- * ### Options
- *
- * - stats - Collect meta data stats for this query. Stats include time take, rows affected,
- *   any errors, and number of rows returned. Defaults to `true`.
- * - log - Whether or not the query should be logged to the memory log.
- *
- * @param string $sql
- * @param array $options
- * @return mixed Resource or object representing the result set, or false on failure
- * @access public
- */
-	function execute($sql, $options = array()) {
+	/**
+	 * Queries the database with given SQL statement, and obtains some metadata 
+	 * about the result (rows affected, timing, any errors, number of rows in 
+	 * resultset). The query is also logged. If Configure::read('debug') is set,
+	 *  the log is shown all the time, else it is only shown on errors.
+	 *
+	 * ### Options
+	 *
+	 * - stats - Collect meta data stats for this query. Stats include time 
+	 *   take, rows affected, any errors, and number of rows returned. Defaults 
+	 *   to `true`.
+	 * - log - Whether or not the query should be logged to the memory log.
+	 *
+	 * @param string $sql
+	 * @param array $options
+	 *
+	 * @return mixed Resource or object representing the result set, or false on
+	 *               failure
+	 */
+	public function execute($sql, $options = array()) {
 		$defaults = array('stats' => true, 'log' => $this->fullDebug);
 		$options = array_merge($defaults, $options);
 
@@ -273,32 +282,35 @@ class LegacyDboSource extends LegacyDataSource {
 		return $this->_result;
 	}
 
-/**
- * DataSource Query abstraction
- *
- * @return resource Result resource identifier.
- * @access public
- */
-	function query() {
-		$args	  = func_get_args();
-		$fields	  = null;
-		$order	  = null;
-		$limit	  = null;
-		$page	  = null;
+	/**
+	 * DataSource Query abstraction
+	 *
+	 * @return resource Result resource identifier.
+	 */
+	public function query() {
+		$args = func_get_args();
+		$fields = null;
+		$order = null;
+		$limit = null;
+		$page = null;
 		$recursive = null;
 
 		if (count($args) == 1) {
 			return $this->fetchAll($args[0]);
-
-		} elseif (count($args) > 1 && (strpos(strtolower($args[0]), 'findby') === 0 || strpos(strtolower($args[0]), 'findallby') === 0)) {
+		} elseif (count($args) > 1 
+			&& (strpos(strtolower($args[0]), 'findby') === 0 
+			|| strpos(strtolower($args[0]), 'findallby') === 0)
+		) {
 			$params = $args[1];
 
 			if (strpos(strtolower($args[0]), 'findby') === 0) {
-				$all  = false;
-				$field = Inflector::underscore(preg_replace('/^findBy/i', '', $args[0]));
+				$all   = false;
+				$field = preg_replace('/^findBy/i', '', $args[0]);
+				$field = Inflector::underscore($field);
 			} else {
-				$all  = true;
-				$field = Inflector::underscore(preg_replace('/^findAllBy/i', '', $args[0]));
+				$all   = true;
+				$field = preg_replace('/^findAllBy/i', '', $args[0]);
+				$field = Inflector::underscore($field);
 			}
 
 			$or = (strpos($field, '_or_') !== false);
@@ -321,7 +333,7 @@ class LegacyDboSource extends LegacyDataSource {
 				return false;
 			}
 
-			$c = 0;
+			$c          = 0;
 			$conditions = array();
 
 			foreach ($field as $f) {
@@ -345,17 +357,22 @@ class LegacyDboSource extends LegacyDataSource {
 				if (isset($params[5 + $off])) {
 					$recursive = $params[5 + $off];
 				}
-				return $args[2]->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive'));
+				$query = compact(
+					'conditions', 'fields', 'order', 'limit', 'page', 
+					'recursive'
+				);
+				return $args[2]->find('all', $query);
 			} else {
 				if (isset($params[3 + $off])) {
 					$recursive = $params[3 + $off];
 				}
-				return $args[2]->find('first', compact('conditions', 'fields', 'order', 'recursive'));
+				$query = compact('conditions', 'fields', 'order', 'recursive');
+				return $args[2]->find('first', $query);
 			}
 		} else {
 			if (isset($args[1]) && $args[1] === true) {
 				return $this->fetchAll($args[0], true);
-			} else if (isset($args[1]) && !is_array($args[1]) ) {
+			} else if (isset($args[1]) && !is_array($args[1])) {
 				return $this->fetchAll($args[0], false);
 			} else if (isset($args[1]) && is_array($args[1])) {
 				$offset = 0;
@@ -365,18 +382,18 @@ class LegacyDboSource extends LegacyDataSource {
 					$cache = true;
 				}
 				$args[1] = array_map(array(&$this, 'value'), $args[1]);
-				return $this->fetchAll(String::insert($args[0], $args[1]), $cache);
+				$sql     = String::insert($args[0], $args[1]);
+				return $this->fetchAll($sql, $cache);
 			}
 		}
 	}
 
-/**
- * Returns a row from current resultset as an array
- *
- * @return array The fetched row as an array
- * @access public
- */
-	function fetchRow($sql = null) {
+	/**
+	 * Returns a row from current resultset as an array
+	 *
+	 * @return array The fetched row as an array
+	 */
+	public function fetchRow($sql = null) {
 		if (!empty($sql) && is_string($sql) && strlen($sql) > 5) {
 			if (!$this->execute($sql)) {
 				return null;
@@ -395,16 +412,16 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Returns an array of all result rows for a given SQL query.
- * Returns false if no rows matched.
- *
- * @param string $sql SQL statement
- * @param boolean $cache Enables returning/storing cached query results
- * @return array Array of resultset rows, or false if no rows matched
- * @access public
- */
-	function fetchAll($sql, $cache = true, $modelName = null) {
+	/**
+	 * Returns an array of all result rows for a given SQL query.
+	 * Returns false if no rows matched.
+	 *
+	 * @param string $sql SQL statement
+	 * @param boolean $cache Enables returning/storing cached query results
+	 *
+	 * @return array Array of resultset rows, or false if no rows matched
+	 */
+	public function fetchAll($sql, $cache = true, $modelName = null) {
 		if ($cache && isset($this->_queryCache[$sql])) {
 			if (preg_match('/^\s*select/i', $sql)) {
 				return $this->_queryCache[$sql];
@@ -437,13 +454,15 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Modifies $result array to place virtual fields in model entry where they belongs to
- *
- * @param array $resut REference to the fetched row
- * @return void
- */
-	function fetchVirtualField(&$result) {
+	/**
+	 * Modifies $result array to place virtual fields in model entry where they
+	 * belongs to
+	 *
+	 * @param array $resut REference to the fetched row
+	 *
+	 * @return void
+	 */
+	public function fetchVirtualField(&$result) {
 		if (isset($result[0]) && is_array($result[0])) {
 			foreach ($result[0] as $field => $value) {
 				if (strpos($field, $this->virtualFieldSeparator) === false) {
@@ -466,15 +485,16 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Returns a single field of the first of query results for a given SQL query, or false if empty.
- *
- * @param string $name Name of the field
- * @param string $sql SQL query
- * @return mixed Value of field read.
- * @access public
- */
-	function field($name, $sql) {
+	/**
+	 * Returns a single field of the first of query results for a given SQL 
+	 * query, or false if empty.
+	 *
+	 * @param string $name Name of the field
+	 * @param string $sql SQL query
+	 *
+	 * @return mixed Value of field read.
+	 */
+	public function field($name, $sql) {
 		$data = $this->fetchRow($sql);
 		if (!isset($data[$name]) || empty($data[$name])) {
 			return false;
@@ -483,52 +503,57 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Empties the method caches.
- * These caches are used by DboSource::name() and DboSource::conditions()
- *
- * @return void
- */
+	/**
+	 * Empties the method caches.
+	 * These caches are used by DboSource::name() and DboSource::conditions()
+	 *
+	 * @return void
+	 */
 	function flushMethodCache() {
 		$this->methodCache = array();
 	}
 
-/**
- * Cache a value into the methodCaches.  Will respect the value of DboSource::$cacheMethods.
- * Will retrieve a value from the cache if $value is null.
- *
- * If caching is disabled and a write is attempted, the $value will be returned.
- * A read will either return the value or null.
- *
- * @param string $method Name of the method being cached.
- * @param string $key The keyname for the cache operation.
- * @param mixed $value The value to cache into memory.
- * @return mixed Either null on failure, or the value if its set.
- */
-	function cacheMethod($method, $key, $value = null) {
+	/**
+	 * Cache a value into the methodCaches.  Will respect the value of 
+	 * DboSource::$cacheMethods. Will retrieve a value from the cache if $value
+	 * is null.
+	 *
+	 * If caching is disabled and a write is attempted, the $value will be 
+	 * returned. A read will either return the value or null.
+	 *
+	 * @param string $method Name of the method being cached.
+	 * @param string $key The keyname for the cache operation.
+	 * @param mixed $value The value to cache into memory.
+	 *
+	 * @return mixed Either null on failure, or the value if its set.
+	 */
+	public function cacheMethod($method, $key, $value = null) {
 		if ($this->cacheMethods === false) {
 			return $value;
 		}
 		if ($value === null) {
-			return (isset($this->methodCache[$method][$key])) ? $this->methodCache[$method][$key] : null;
+			return (isset($this->methodCache[$method][$key])) ? 
+				$this->methodCache[$method][$key] : null;
 		}
 		return $this->methodCache[$method][$key] = $value;
 	}
 
-/**
- * Returns a quoted name of $data for use in an SQL statement.
- * Strips fields out of SQL functions before quoting.
- *
- * Results of this method are stored in a memory cache.  This improves performance, but
- * because the method uses a simple hashing algorithm it can infrequently have collisions.
- * Setting DboSource::$cacheMethods to false will disable the memory cache.
- *
- * @param mixed $data Either a string with a column to quote. An array of columns to quote or an
- *   object from DboSource::expression() or DboSource::identifier()
- * @return string SQL field
- * @access public
- */
-	function name($data) {
+	/**
+	 * Returns a quoted name of $data for use in an SQL statement.
+	 * Strips fields out of SQL functions before quoting.
+	 *
+	 * Results of this method are stored in a memory cache.  This improves 
+	 * performance, but because the method uses a simple hashing algorithm it 
+	 * can infrequently have collisions. Setting DboSource::$cacheMethods to 
+	 * false will disable the memory cache.
+	 *
+	 * @param mixed $data Either a string with a column to quote. An array of 
+	 *                    columns to quote or an object from 
+	 *                    DboSource::expression() or DboSource::identifier()
+	 *
+	 * @return string SQL field
+	 */
+	public function name($data) {
 		if (is_object($data) && isset($data->type)) {
 			return $data->value;
 		}
@@ -541,74 +566,96 @@ class LegacyDboSource extends LegacyDataSource {
 			}
 			return $data;
 		}
-		$cacheKey = crc32($this->startQuote.$data.$this->endQuote);
+		$cacheKey = crc32($this->startQuote . $data . $this->endQuote);
 		if ($return = $this->cacheMethod(__FUNCTION__, $cacheKey)) {
 			return $return;
 		}
 		$data = trim($data);
 		if (preg_match('/^[\w-]+(?:\.[^ \*]*)*$/', $data)) { // string, string.string
 			if (strpos($data, '.') === false) { // string
-				return $this->cacheMethod(__FUNCTION__, $cacheKey, $this->startQuote . $data . $this->endQuote);
+				return $this->cacheMethod(
+					__FUNCTION__,
+					$cacheKey,
+					$this->startQuote . $data . $this->endQuote
+				);
 			}
 			$items = explode('.', $data);
-			return $this->cacheMethod(__FUNCTION__, $cacheKey,
-				$this->startQuote . implode($this->endQuote . '.' . $this->startQuote, $items) . $this->endQuote
+			return $this->cacheMethod(
+				__FUNCTION__,
+				$cacheKey,
+				$this->startQuote . implode(
+					$this->endQuote . '.' . $this->startQuote, $items
+				) . $this->endQuote
 			);
 		}
 		if (preg_match('/^[\w-]+\.\*$/', $data)) { // string.*
-			return $this->cacheMethod(__FUNCTION__, $cacheKey,
-				$this->startQuote . str_replace('.*', $this->endQuote . '.*', $data)
+			return $this->cacheMethod(
+				__FUNCTION__,
+				$cacheKey,
+				$this->startQuote . str_replace(
+					'.*', $this->endQuote . '.*', $data
+				)
 			);
 		}
 		if (preg_match('/^([\w-]+)\((.*)\)$/', $data, $matches)) { // Functions
-			return $this->cacheMethod(__FUNCTION__, $cacheKey,
-				 $matches[1] . '(' . $this->name($matches[2]) . ')'
+			return $this->cacheMethod(
+				__FUNCTION__,
+				$cacheKey,
+				$matches[1] . '(' . $this->name($matches[2]) . ')'
 			);
 		}
-		if (
-			preg_match('/^([\w-]+(\.[\w-]+|\(.*\))*)\s+' . preg_quote($this->alias) . '\s*([\w-]+)$/i', $data, $matches
+		if (preg_match(
+			'/^([\w-]+(\.[\w-]+|\(.*\))*)\s+' . preg_quote($this->alias)
+			. '\s*([\w-]+)$/i', 
+			$data, 
+			$matches
 		)) {
 			return $this->cacheMethod(
-				__FUNCTION__, $cacheKey,
-				preg_replace(
-					'/\s{2,}/', ' ', $this->name($matches[1]) . ' ' . $this->alias . ' ' . $this->name($matches[3])
+				__FUNCTION__, $cacheKey, preg_replace(
+					'/\s{2,}/', 
+					' ',
+					$this->name($matches[1]) . ' ' . $this->alias . ' '
+					. $this->name($matches[3])
 				)
 			);
 		}
 		if (preg_match('/^[\w-_\s]*[\w-_]+/', $data)) {
-			return $this->cacheMethod(__FUNCTION__, $cacheKey, $this->startQuote . $data . $this->endQuote);
+			return $this->cacheMethod(
+				__FUNCTION__,
+				$cacheKey,
+				$this->startQuote . $data . $this->endQuote
+			);
 		}
 		return $this->cacheMethod(__FUNCTION__, $cacheKey, $data);
 	}
 
-/**
- * Checks if the source is connected to the database.
- *
- * @return boolean True if the database is connected, else false
- * @access public
- */
-	function isConnected() {
+	/**
+	 * Checks if the source is connected to the database.
+	 *
+	 * @return boolean True if the database is connected, else false
+	 */
+	public function isConnected() {
 		return $this->connected;
 	}
 
-/**
- * Checks if the result is valid
- *
- * @return boolean True if the result is valid else false
- * @access public
- */
-	function hasResult() {
+	/**
+	 * Checks if the result is valid
+	 *
+	 * @return boolean True if the result is valid else false
+	 */
+	public function hasResult() {
 		return is_resource($this->_result);
 	}
 
-/**
- * Get the query log as an array.
- *
- * @param boolean $sorted Get the queries sorted by time taken, defaults to false.
- * @return array Array of queries run as an array
- * @access public
- */
-	function getLog($sorted = false, $clear = true) {
+	/**
+	 * Get the query log as an array.
+	 *
+	 * @param boolean $sorted Get the queries sorted by time taken, defaults to
+	 *                        false.
+	 *
+	 * @return array Array of queries run as an array
+	 */
+	public function getLog($sorted = false, $clear = true) {
 		if ($sorted) {
 			$log = sortByKey($this->_queriesLog, 'took', 'desc', SORT_NUMERIC);
 		} else {
@@ -617,17 +664,24 @@ class LegacyDboSource extends LegacyDataSource {
 		if ($clear) {
 			$this->_queriesLog = array();
 		}
-		return array('log' => $log, 'count' => $this->_queriesCnt, 'time' => $this->_queriesTime);
+		return array(
+			'log'   => $log,
+			'count' => $this->_queriesCnt,
+			'time'  => $this->_queriesTime
+		);
 	}
 
-/**
- * Outputs the contents of the queries log. If in a non-CLI environment the sql_log element
- * will be rendered and output.  If in a CLI environment, a plain text log is generated.
- *
- * @param boolean $sorted Get the queries sorted by time taken, defaults to false.
- * @return void
- */
-	function showLog($sorted = false) {
+	/**
+	 * Outputs the contents of the queries log. If in a non-CLI environment the 
+	 * sql_log element will be rendered and output.  If in a CLI environment, a
+	 * plain text log is generated.
+	 *
+	 * @param boolean $sorted Get the queries sorted by time taken, defaults to
+	 *                        false.
+	 *
+	 * @return void
+	 */
+	public function showLog($sorted = false) {
 		$log = $this->getLog($sorted, false);
 		if (empty($log['log'])) {
 			return;
@@ -635,7 +689,7 @@ class LegacyDboSource extends LegacyDataSource {
 		if (PHP_SAPI != 'cli') {
 			App::import('Core', 'View');
 			$controller = null;
-			$View =& new View($controller, false);
+			$View = & new View($controller, false);
 			$View->set('logs', array($this->configKeyName => $log));
 			echo $View->element('sql_dump', array('_forced_from_dbo_' => true));
 		} else {
@@ -645,22 +699,21 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Log given SQL query.
- *
- * @param string $sql SQL statement
- * @todo: Add hook to log errors instead of returning false
- * @access public
- */
-	function logQuery($sql) {
+	/**
+	 * Log given SQL query.
+	 *
+	 * @param string $sql SQL statement
+	 * @todo: Add hook to log errors instead of returning false
+	 */
+	public function logQuery($sql) {
 		$this->_queriesCnt++;
 		$this->_queriesTime += $this->took;
 		$this->_queriesLog[] = array(
 			'query' => $sql,
-			'error'		=> $this->error,
-			'affected'	=> $this->affected,
-			'numRows'	=> $this->numRows,
-			'took'		=> $this->took
+			'error' => $this->error,
+			'affected' => $this->affected,
+			'numRows' => $this->numRows,
+			'took' => $this->took
 		);
 		if (count($this->_queriesLog) > $this->_queriesLogMax) {
 			array_pop($this->_queriesLog);
@@ -670,14 +723,14 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Output information about an SQL query. The SQL statement, number of rows in resultset,
- * and execution time in microseconds. If the query fails, an error is output instead.
- *
- * @param string $sql Query to show information on.
- * @access public
- */
-	function showQuery($sql) {
+	/**
+	 * Output information about an SQL query. The SQL statement, number of rows
+	 * in resultset, and execution time in microseconds. If the query fails, an
+	 * error is output instead.
+	 *
+	 * @param string $sql Query to show information on.
+	 */
+	public function showQuery($sql) {
 		$error = $this->error;
 		if (strlen($sql) > 200 && !$this->fullDebug && Configure::read() > 1) {
 			$sql = substr($sql, 0, 200) . '[...]';
@@ -685,23 +738,34 @@ class LegacyDboSource extends LegacyDataSource {
 		if (Configure::read() > 0) {
 			$out = null;
 			if ($error) {
-				trigger_error('<span style="color:Red;text-align:left"><b>' . __('SQL Error:', true) . "</b> {$this->error}</span>", E_USER_WARNING);
+				trigger_error(
+					'<span style="color:Red;text-align:left"><b>'
+					. __('SQL Error:', true) . "</b> {$this->error}</span>", 
+					E_USER_WARNING
+				);
 			} else {
-				$out = ('<small>[' . sprintf(__('Aff:%s Num:%s Took:%sms', true), $this->affected, $this->numRows, $this->took) . ']</small>');
+				$out = ('<small>['
+					. sprintf(__('Aff:%s Num:%s Took:%sms', true), 
+					$this->affected, $this->numRows, $this->took) . ']</small>'
+				);
 			}
-			pr(sprintf('<p style="text-align:left"><b>' . __('Query:', true) . '</b> %s %s</p>', $sql, $out));
+			pr(sprintf('<p style="text-align:left"><b>' . __('Query:', true)
+				. '</b> %s %s</p>', 
+				$sql,
+				$out
+			));
 		}
 	}
 
-/**
- * Gets full table name including prefix
- *
- * @param mixed $model Either a Model object or a string table name.
- * @param boolean $quote Whether you want the table name quoted.
- * @return string Full quoted table name
- * @access public
- */
-	function fullTableName($model, $quote = true) {
+	/**
+	 * Gets full table name including prefix
+	 *
+	 * @param mixed $model Either a Model object or a string table name.
+	 * @param boolean $quote Whether you want the table name quoted.
+	 *
+	 * @return string Full quoted table name
+	 */
+	public function fullTableName($model, $quote = true) {
 		if (is_object($model)) {
 			$table = $model->tablePrefix . $model->table;
 		} elseif (isset($this->config['prefix'])) {
@@ -715,20 +779,20 @@ class LegacyDboSource extends LegacyDataSource {
 		return $table;
 	}
 
-/**
- * The "C" in CRUD
- *
- * Creates new records in the database.
- *
- * @param Model $model Model object that the record is for.
- * @param array $fields An array of field names to insert. If null, $model->data will be
- *   used to generate field names.
- * @param array $values An array of values with keys matching the fields. If null, $model->data will
- *   be used to generate values.
- * @return boolean Success
- * @access public
- */
-	function create(&$model, $fields = null, $values = null) {
+	/**
+	 * The "C" in CRUD
+	 *
+	 * Creates new records in the database.
+	 *
+	 * @param Model $model  Model object that the record is for.
+	 * @param array $fields An array of field names to insert. If null, 
+	 *                      $model->data will be used to generate field names.
+	 * @param array $values An array of values with keys matching the fields. If
+	 *                      null, $model->data will be used to generate values.
+	 *
+	 * @return boolean Success
+	 */
+	public function create(&$model, $fields = null, $values = null) {
 		$id = null;
 
 		if ($fields == null) {
@@ -739,7 +803,11 @@ class LegacyDboSource extends LegacyDataSource {
 		$count = count($fields);
 
 		for ($i = 0; $i < $count; $i++) {
-			$valueInsert[] = $this->value($values[$i], $model->getColumnType($fields[$i]), false);
+			$valueInsert[] = $this->value(
+				$values[$i],
+				$model->getColumnType($fields[$i]),
+				false
+			);
 		}
 		for ($i = 0; $i < $count; $i++) {
 			$fieldInsert[] = $this->name($fields[$i]);
@@ -755,7 +823,10 @@ class LegacyDboSource extends LegacyDataSource {
 
 		if ($this->execute($this->renderStatement('create', $query))) {
 			if (empty($id)) {
-				$id = $this->lastInsertId($this->fullTableName($model, false), $model->primaryKey);
+				$id = $this->lastInsertId(
+					$this->fullTableName($model, false), 
+					$model->primaryKey
+				);
 			}
 			$model->setInsertID($id);
 			$model->id = $id;
@@ -766,17 +837,20 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * The "R" in CRUD
- *
- * Reads record(s) from the database.
- *
- * @param Model $model A Model object that the query is for.
- * @param array $queryData An array of queryData information containing keys similar to Model::find()
- * @param integer $recursive Number of levels of association
- * @return mixed boolean false on error/failure.  An array of results on success.
- */
-	function read(&$model, $queryData = array(), $recursive = null) {
+	/**
+	 * The "R" in CRUD
+	 *
+	 * Reads record(s) from the database.
+	 *
+	 * @param Model $model       A Model object that the query is for.
+	 * @param array $queryData   An array of queryData information containing 
+	 *                           keys similar to Model::find()
+	 * @param integer $recursive Number of levels of association
+	 *
+	 * @return mixed boolean false on error/failure.  An array of results on 
+	 *                       success.
+	 */
+	public function read(&$model, $queryData = array(), $recursive = null) {
 		$queryData = $this->__scrubQueryData($queryData);
 
 		$null = null;
@@ -796,7 +870,11 @@ class LegacyDboSource extends LegacyDataSource {
 
 		if (!empty($queryData['fields'])) {
 			$this->__bypass = true;
-			$queryData['fields'] = $this->fields($model, null, $queryData['fields']);
+			$queryData['fields'] = $this->fields(
+				$model,
+				null,
+				$queryData['fields']
+			);
 		} else {
 			$queryData['fields'] = $this->fields($model);
 		}
@@ -811,20 +889,29 @@ class LegacyDboSource extends LegacyDataSource {
 
 		foreach ($_associations as $type) {
 			foreach ($model->{$type} as $assoc => $assocData) {
-				$linkModel =& $model->{$assoc};
+				$linkModel = & $model->{$assoc};
 				$external = isset($assocData['external']);
 
 				if ($model->useDbConfig == $linkModel->useDbConfig) {
-					if (true === $this->generateAssociationQuery($model, $linkModel, $type, $assoc, $assocData, $queryData, $external, $null)) {
+					$assocQuery = $this->generateAssociationQuery(
+						$model, $linkModel, $type, $assoc, $assocData, 
+						$queryData, $external, $null
+					);
+					
+					if (true === $assocQuery) {
 						$linkedModels[$type . '/' . $assoc] = true;
 					}
 				}
 			}
 		}
 
-		$query = $this->generateAssociationQuery($model, $null, null, null, null, $queryData, false, $null);
+		$query = $this->generateAssociationQuery(
+			$model, $null, null, null, null, $queryData, false, $null
+		);
 
-		$resultSet = $this->fetchAll($query, $model->cacheQueries, $model->alias);
+		$resultSet = $this->fetchAll(
+			$query, $model->cacheQueries, $model->alias
+		);
 
 		if ($resultSet === false) {
 			$model->onError();
@@ -836,25 +923,34 @@ class LegacyDboSource extends LegacyDataSource {
 		if ($model->recursive > -1) {
 			foreach ($_associations as $type) {
 				foreach ($model->{$type} as $assoc => $assocData) {
-					$linkModel =& $model->{$assoc};
+					$linkModel = & $model->{$assoc};
 
 					if (empty($linkedModels[$type . '/' . $assoc])) {
 						if ($model->useDbConfig == $linkModel->useDbConfig) {
 							$db =& $this;
 						} else {
-							$db =& ConnectionManager::getDataSource($linkModel->useDbConfig);
+							$db =& ConnectionManager::getDataSource(
+								$linkModel->useDbConfig
+							);
 						}
-					} elseif ($model->recursive > 1 && ($type == 'belongsTo' || $type == 'hasOne')) {
-						$db =& $this;
+					} elseif ($model->recursive > 1 
+						&& ($type == 'belongsTo' 
+						|| $type == 'hasOne')
+					) {
+						$db = & $this;
 					}
 
 					if (isset($db) && method_exists($db, 'queryAssociation')) {
 						$stack = array($assoc);
-						$db->queryAssociation($model, $linkModel, $type, $assoc, $assocData, $array, true, $resultSet, $model->recursive - 1, $stack);
+						$db->queryAssociation(
+							$model, $linkModel, $type, $assoc, $assocData, 
+							$array, true, $resultSet, $model->recursive - 1, 
+							$stack
+						);
 						unset($db);
 
 						if ($type === 'hasMany') {
-							$filtered []= $assoc;
+							$filtered [] = $assoc;
 						}
 					}
 				}
@@ -868,16 +964,16 @@ class LegacyDboSource extends LegacyDataSource {
 		return $resultSet;
 	}
 
-/**
- * Passes association results thru afterFind filters of corresponding model
- *
- * @param array $results Reference of resultset to be filtered
- * @param object $model Instance of model to operate against
- * @param array $filtered List of classes already filtered, to be skipped
- * @return array Array of results that have been filtered through $model->afterFind
- * @access private
- */
-	function __filterResults(&$results, &$model, $filtered = array()) {
+	/**
+	 * Passes association results thru afterFind filters of corresponding model
+	 *
+	 * @param array $results Reference of resultset to be filtered
+	 * @param object $model Instance of model to operate against
+	 * @param array $filtered List of classes already filtered, to be skipped
+	 *
+	 * @return array Array of results that have been filtered through $model->afterFind
+	 */
+	private function __filterResults(&$results, &$model, $filtered = array()) {
 		$filtering = array();
 		$count = count($results);
 
@@ -906,21 +1002,21 @@ class LegacyDboSource extends LegacyDataSource {
 		return $filtering;
 	}
 
-/**
- * Queries associations.  Used to fetch results on recursive models.
- *
- * @param Model $model Primary Model object
- * @param Model $linkModel Linked model that
- * @param string $type Association type, one of the model association types ie. hasMany
- * @param unknown_type $association
- * @param unknown_type $assocData
- * @param array $queryData
- * @param boolean $external Whether or not the association query is on an external datasource.
- * @param array $resultSet Existing results
- * @param integer $recursive Number of levels of association
- * @param array $stack
- */
-	function queryAssociation(&$model, &$linkModel, $type, $association, $assocData, &$queryData, $external = false, &$resultSet, $recursive, $stack) {
+	/**
+	 * Queries associations.  Used to fetch results on recursive models.
+	 *
+	 * @param Model $model Primary Model object
+	 * @param Model $linkModel Linked model that
+	 * @param string $type Association type, one of the model association types ie. hasMany
+	 * @param unknown_type $association
+	 * @param unknown_type $assocData
+	 * @param array $queryData
+	 * @param boolean $external Whether or not the association query is on an external datasource.
+	 * @param array $resultSet Existing results
+	 * @param integer $recursive Number of levels of association
+	 * @param array $stack
+	 */
+	public function queryAssociation(&$model, &$linkModel, $type, $association, $assocData, &$queryData, $external = false, &$resultSet, $recursive, $stack) {
 		if ($query = $this->generateAssociationQuery($model, $linkModel, $type, $association, $assocData, $queryData, $external, $resultSet)) {
 			if (!isset($resultSet) || !is_array($resultSet)) {
 				if (Configure::read() > 0) {
@@ -951,14 +1047,14 @@ class LegacyDboSource extends LegacyDataSource {
 					if ($recursive > 0) {
 						foreach ($this->__associations as $type1) {
 							foreach ($linkModel->{$type1} as $assoc1 => $assocData1) {
-								$deepModel =& $linkModel->{$assoc1};
+								$deepModel = & $linkModel->{$assoc1};
 								$tmpStack = $stack;
 								$tmpStack[] = $assoc1;
 
 								if ($linkModel->useDbConfig === $deepModel->useDbConfig) {
-									$db =& $this;
+									$db = & $this;
 								} else {
-									$db =& ConnectionManager::getDataSource($deepModel->useDbConfig);
+									$db = & ConnectionManager::getDataSource($deepModel->useDbConfig);
 								}
 								$db->queryAssociation($linkModel, $deepModel, $type1, $assoc1, $assocData1, $queryData, true, $fetch, $recursive - 1, $tmpStack);
 							}
@@ -977,10 +1073,10 @@ class LegacyDboSource extends LegacyDataSource {
 				if (!empty($ins)) {
 					$ins = array_unique($ins);
 					if (count($ins) > 1) {
-						$query = str_replace('{$__cakeID__$}', '(' .implode(', ', $ins) .')', $query);
+						$query = str_replace('{$__cakeID__$}', '(' . implode(', ', $ins) . ')', $query);
 						$query = str_replace('= (', 'IN (', $query);
 					} else {
-						$query = str_replace('{$__cakeID__$}',$ins[0], $query);
+						$query = str_replace('{$__cakeID__$}', $ins[0], $query);
 					}
 
 					$query = str_replace(' WHERE 1 = 1', '', $query);
@@ -1000,7 +1096,7 @@ class LegacyDboSource extends LegacyDataSource {
 			}
 
 			for ($i = 0; $i < $count; $i++) {
-				$row =& $resultSet[$i];
+				$row = & $resultSet[$i];
 
 				if ($type !== 'hasAndBelongsToMany') {
 					$q = $this->insertQueryData($query, $resultSet[$i], $association, $assocData, $model, $linkModel, $stack);
@@ -1020,15 +1116,15 @@ class LegacyDboSource extends LegacyDataSource {
 					if ($recursive > 0) {
 						foreach ($this->__associations as $type1) {
 							foreach ($linkModel->{$type1} as $assoc1 => $assocData1) {
-								$deepModel =& $linkModel->{$assoc1};
+								$deepModel = & $linkModel->{$assoc1};
 
 								if (($type1 === 'belongsTo') || ($deepModel->alias === $model->alias && $type === 'belongsTo') || ($deepModel->alias != $model->alias)) {
 									$tmpStack = $stack;
 									$tmpStack[] = $assoc1;
 									if ($linkModel->useDbConfig == $deepModel->useDbConfig) {
-										$db =& $this;
+										$db = & $this;
 									} else {
-										$db =& ConnectionManager::getDataSource($deepModel->useDbConfig);
+										$db = & ConnectionManager::getDataSource($deepModel->useDbConfig);
 									}
 									$db->queryAssociation($linkModel, $deepModel, $type1, $assoc1, $assocData1, $queryData, true, $fetch, $recursive - 1, $tmpStack);
 								}
@@ -1067,16 +1163,16 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * A more efficient way to fetch associations.	Woohoo!
- *
- * @param model $model Primary model object
- * @param string $query Association query
- * @param array $ids Array of IDs of associated records
- * @return array Association results
- * @access public
- */
-	function fetchAssociated($model, $query, $ids) {
+	/**
+	 * A more efficient way to fetch associations.	Woohoo!
+	 *
+	 * @param model $model Primary model object
+	 * @param string $query Association query
+	 * @param array $ids Array of IDs of associated records
+	 *
+	 * @return array Association results
+	 */
+	public function fetchAssociated($model, $query, $ids) {
 		$query = str_replace('{$__cakeID__$}', implode(', ', $ids), $query);
 		if (count($ids) > 1) {
 			$query = str_replace('= (', 'IN (', $query);
@@ -1084,18 +1180,19 @@ class LegacyDboSource extends LegacyDataSource {
 		return $this->fetchAll($query, $model->cacheQueries, $model->alias);
 	}
 
-/**
- * mergeHasMany - Merge the results of hasMany relations.
- *
- *
- * @param array $resultSet Data to merge into
- * @param array $merge Data to merge
- * @param string $association Name of Model being Merged
- * @param object $model Model being merged onto
- * @param object $linkModel Model being merged
- * @return void
- */
-	function __mergeHasMany(&$resultSet, $merge, $association, &$model, &$linkModel) {
+	/**
+	 * mergeHasMany - Merge the results of hasMany relations.
+	 *
+	 *
+	 * @param array $resultSet Data to merge into
+	 * @param array $merge Data to merge
+	 * @param string $association Name of Model being Merged
+	 * @param object $model Model being merged onto
+	 * @param object $linkModel Model being merged
+	 *
+	 * @return void
+	 */
+	private function __mergeHasMany(&$resultSet, $merge, $association, &$model, &$linkModel) {
 		foreach ($resultSet as $i => $value) {
 			$count = 0;
 			$merged[$association] = array();
@@ -1124,17 +1221,16 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Enter description here...
- *
- * @param unknown_type $data
- * @param unknown_type $merge
- * @param unknown_type $association
- * @param unknown_type $type
- * @param boolean $selfJoin
- * @access private
- */
-	function __mergeAssociation(&$data, $merge, $association, $type, $selfJoin = false) {
+	/**
+	 * Enter description here...
+	 *
+	 * @param unknown_type $data
+	 * @param unknown_type $merge
+	 * @param unknown_type $association
+	 * @param unknown_type $type
+	 * @param boolean $selfJoin
+	 */
+	private function __mergeAssociation(&$data, $merge, $association, $type, $selfJoin = false) {
 		if (isset($merge[0]) && !isset($merge[0][$association])) {
 			$association = Inflector::pluralize($association);
 		}
@@ -1204,21 +1300,21 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Generates an array representing a query or part of a query from a single model or two associated models
- *
- * @param Model $model
- * @param Model $linkModel
- * @param string $type
- * @param string $association
- * @param array $assocData
- * @param array $queryData
- * @param boolean $external
- * @param array $resultSet
- * @return mixed
- * @access public
- */
-	function generateAssociationQuery(&$model, &$linkModel, $type, $association = null, $assocData = array(), &$queryData, $external = false, &$resultSet) {
+	/**
+	 * Generates an array representing a query or part of a query from a single model or two associated models
+	 *
+	 * @param Model $model
+	 * @param Model $linkModel
+	 * @param string $type
+	 * @param string $association
+	 * @param array $assocData
+	 * @param array $queryData
+	 * @param boolean $external
+	 * @param array $resultSet
+	 *
+	 * @return mixed
+	 */
+	public function generateAssociationQuery(&$model, &$linkModel, $type, $association = null, $assocData = array(), &$queryData, $external = false, &$resultSet) {
 		$queryData = $this->__scrubQueryData($queryData);
 		$assocData = $this->__scrubQueryData($assocData);
 
@@ -1229,7 +1325,7 @@ class LegacyDboSource extends LegacyDataSource {
 			$passedFields = $this->fields($model, $model->alias, $queryData['fields']);
 			if (count($passedFields) === 1) {
 				$match = strpos($passedFields[0], $assocFields[0]);
-				$match1 = (bool)preg_match('/^[a-z]+\(/i', $passedFields[0]);
+				$match1 = (bool) preg_match('/^[a-z]+\(/i', $passedFields[0]);
 
 				if ($match === false && $match1 === false) {
 					$queryData['fields'] = array_merge($passedFields, $assocFields);
@@ -1244,7 +1340,7 @@ class LegacyDboSource extends LegacyDataSource {
 
 		if ($linkModel == null) {
 			return $this->buildStatement(
-				array(
+					array(
 					'fields' => array_unique($queryData['fields']),
 					'table' => $this->fullTableName($model),
 					'alias' => $model->alias,
@@ -1254,8 +1350,7 @@ class LegacyDboSource extends LegacyDataSource {
 					'conditions' => $queryData['conditions'],
 					'order' => $queryData['order'],
 					'group' => $queryData['group']
-				),
-				$model
+					), $model
 			);
 		}
 		if ($external && !empty($assocData['finderQuery'])) {
@@ -1278,8 +1373,7 @@ class LegacyDboSource extends LegacyDataSource {
 			case 'hasOne':
 			case 'belongsTo':
 				$conditions = $this->__mergeConditions(
-					$assocData['conditions'],
-					$this->getConstraint($type, $model, $linkModel, $alias, array_merge($assocData, compact('external', 'self')))
+					$assocData['conditions'], $this->getConstraint($type, $model, $linkModel, $alias, array_merge($assocData, compact('external', 'self')))
 				);
 
 				if (!$self && $external) {
@@ -1297,7 +1391,7 @@ class LegacyDboSource extends LegacyDataSource {
 						'fields' => $fields,
 						'alias' => $alias,
 						'group' => null
-					));
+						));
 					$query = array_merge(array('order' => $assocData['order'], 'limit' => $assocData['limit']), $query);
 				} else {
 					$join = array(
@@ -1306,6 +1400,7 @@ class LegacyDboSource extends LegacyDataSource {
 						'type' => isset($assocData['type']) ? $assocData['type'] : 'LEFT',
 						'conditions' => trim($this->conditions($conditions, true, false, $model))
 					);
+					
 					$queryData['fields'] = array_merge($queryData['fields'], $fields);
 
 					if (!empty($assocData['order'])) {
@@ -1316,7 +1411,7 @@ class LegacyDboSource extends LegacyDataSource {
 					}
 					return true;
 				}
-			break;
+				break;
 			case 'hasMany':
 				$assocData['fields'] = $this->fields($linkModel, $alias, $assocData['fields']);
 				if (!empty($assocData['foreignKey'])) {
@@ -1331,7 +1426,7 @@ class LegacyDboSource extends LegacyDataSource {
 					'limit' => $assocData['limit'],
 					'group' => null
 				);
-			break;
+				break;
 			case 'hasAndBelongsToMany':
 				$joinFields = array();
 				$joinAssoc = null;
@@ -1362,12 +1457,12 @@ class LegacyDboSource extends LegacyDataSource {
 					'order' => $assocData['order'],
 					'group' => null,
 					'joins' => array(array(
-						'table' => $joinTbl,
-						'alias' => $joinAssoc,
-						'conditions' => $this->getConstraint('hasAndBelongsToMany', $model, $linkModel, $joinAlias, $assocData, $alias)
+							'table' => $joinTbl,
+							'alias' => $joinAssoc,
+							'conditions' => $this->getConstraint('hasAndBelongsToMany', $model, $linkModel, $joinAlias, $assocData, $alias)
 					))
 				);
-			break;
+				break;
 		}
 		if (isset($query)) {
 			return $this->buildStatement($query, $model);
@@ -1375,16 +1470,16 @@ class LegacyDboSource extends LegacyDataSource {
 		return null;
 	}
 
-/**
- * Returns a conditions array for the constraint between two models
- *
- * @param string $type Association type
- * @param object $model Model object
- * @param array $association Association array
- * @return array Conditions array defining the constraint between $model and $association
- * @access public
- */
-	function getConstraint($type, $model, $linkModel, $alias, $assoc, $alias2 = null) {
+	/**
+	 * Returns a conditions array for the constraint between two models
+	 *
+	 * @param string $type Association type
+	 * @param object $model Model object
+	 * @param array $association Association array
+	 *
+	 * @return array Conditions array defining the constraint between $model and $association
+	 */
+	public function getConstraint($type, $model, $linkModel, $alias, $assoc, $alias2 = null) {
 		$assoc = array_merge(array('external' => false, 'self' => false), $assoc);
 
 		if (array_key_exists('foreignKey', $assoc) && empty($assoc['foreignKey'])) {
@@ -1394,45 +1489,46 @@ class LegacyDboSource extends LegacyDataSource {
 		switch (true) {
 			case ($assoc['external'] && $type == 'hasOne'):
 				return array("{$alias}.{$assoc['foreignKey']}" => '{$__cakeID__$}');
-			break;
+				break;
 			case ($assoc['external'] && $type == 'belongsTo'):
 				return array("{$alias}.{$linkModel->primaryKey}" => '{$__cakeForeignKey__$}');
-			break;
+				break;
 			case (!$assoc['external'] && $type == 'hasOne'):
 				return array("{$alias}.{$assoc['foreignKey']}" => $this->identifier("{$model->alias}.{$model->primaryKey}"));
-			break;
+				break;
 			case (!$assoc['external'] && $type == 'belongsTo'):
 				return array("{$model->alias}.{$assoc['foreignKey']}" => $this->identifier("{$alias}.{$linkModel->primaryKey}"));
-			break;
+				break;
 			case ($type == 'hasMany'):
 				return array("{$alias}.{$assoc['foreignKey']}" => array('{$__cakeID__$}'));
-			break;
+				break;
 			case ($type == 'hasAndBelongsToMany'):
 				return array(
 					array("{$alias}.{$assoc['foreignKey']}" => '{$__cakeID__$}'),
 					array("{$alias}.{$assoc['associationForeignKey']}" => $this->identifier("{$alias2}.{$linkModel->primaryKey}"))
 				);
-			break;
+				break;
 		}
 		return array();
 	}
 
-/**
- * Builds and generates a JOIN statement from an array.	 Handles final clean-up before conversion.
- *
- * @param array $join An array defining a JOIN statement in a query
- * @return string An SQL JOIN statement to be used in a query
- * @access public
- * @see DboSource::renderJoinStatement()
- * @see DboSource::buildStatement()
- */
-	function buildJoinStatement($join) {
+	/**
+	 * Builds and generates a JOIN statement from an array.	 Handles final clean-up before conversion.
+	 *
+	 * @param array $join An array defining a JOIN statement in a query
+	 *
+	 * @return string An SQL JOIN statement to be used in a query
+
+	 * @see DboSource::renderJoinStatement()
+	 * @see DboSource::buildStatement()
+	 */
+	public function buildJoinStatement($join) {
 		$data = array_merge(array(
 			'type' => null,
 			'alias' => null,
 			'table' => 'join_table',
 			'conditions' => array()
-		), $join);
+			), $join);
 
 		if (!empty($data['alias'])) {
 			$data['alias'] = $this->alias . $this->name($data['alias']);
@@ -1446,16 +1542,17 @@ class LegacyDboSource extends LegacyDataSource {
 		return $this->renderJoinStatement($data);
 	}
 
-/**
- * Builds and generates an SQL statement from an array.	 Handles final clean-up before conversion.
- *
- * @param array $query An array defining an SQL query
- * @param object $model The model object which initiated the query
- * @return string An executable SQL statement
- * @access public
- * @see DboSource::renderStatement()
- */
-	function buildStatement($query, &$model) {
+	/**
+	 * Builds and generates an SQL statement from an array.	 Handles final clean-up before conversion.
+	 *
+	 * @param array $query An array defining an SQL query
+	 * @param object $model The model object which initiated the query
+	 *
+	 * @return string An executable SQL statement
+
+	 * @see DboSource::renderStatement()
+	 */
+	public function buildStatement($query, &$model) {
 		$query = array_merge(array('offset' => null, 'joins' => array()), $query);
 		if (!empty($query['joins'])) {
 			$count = count($query['joins']);
@@ -1466,60 +1563,60 @@ class LegacyDboSource extends LegacyDataSource {
 			}
 		}
 		return $this->renderStatement('select', array(
-			'conditions' => $this->conditions($query['conditions'], true, true, $model),
-			'fields' => implode(', ', $query['fields']),
-			'table' => $query['table'],
-			'alias' => $this->alias . $this->name($query['alias']),
-			'order' => $this->order($query['order'], 'ASC', $model),
-			'limit' => $this->limit($query['limit'], $query['offset']),
-			'joins' => implode(' ', $query['joins']),
-			'group' => $this->group($query['group'], $model)
-		));
+				'conditions' => $this->conditions($query['conditions'], true, true, $model),
+				'fields' => implode(', ', $query['fields']),
+				'table' => $query['table'],
+				'alias' => $this->alias . $this->name($query['alias']),
+				'order' => $this->order($query['order'], 'ASC', $model),
+				'limit' => $this->limit($query['limit'], $query['offset']),
+				'joins' => implode(' ', $query['joins']),
+				'group' => $this->group($query['group'], $model)
+			));
 	}
 
-/**
- * Renders a final SQL JOIN statement
- *
- * @param array $data
- * @return string
- * @access public
- */
-	function renderJoinStatement($data) {
+	/**
+	 * Renders a final SQL JOIN statement
+	 *
+	 * @param array $data
+	 *
+	 * @return string
+	 */
+	public function renderJoinStatement($data) {
 		extract($data);
 		return trim("{$type} JOIN {$table} {$alias} ON ({$conditions})");
 	}
 
-/**
- * Renders a final SQL statement by putting together the component parts in the correct order
- *
- * @param string $type type of query being run.  e.g select, create, update, delete, schema, alter.
- * @param array $data Array of data to insert into the query.
- * @return string Rendered SQL expression to be run.
- * @access public
- */
-	function renderStatement($type, $data) {
+	/**
+	 * Renders a final SQL statement by putting together the component parts in the correct order
+	 *
+	 * @param string $type type of query being run.  e.g select, create, update, delete, schema, alter.
+	 * @param array $data Array of data to insert into the query.
+	 *
+	 * @return string Rendered SQL expression to be run.
+	 */
+	public function renderStatement($type, $data) {
 		extract($data);
 		$aliases = null;
 
 		switch (strtolower($type)) {
 			case 'select':
 				return "SELECT {$fields} FROM {$table} {$alias} {$joins} {$conditions} {$group} {$order} {$limit}";
-			break;
+				break;
 			case 'create':
 				return "INSERT INTO {$table} ({$fields}) VALUES ({$values})";
-			break;
+				break;
 			case 'update':
 				if (!empty($alias)) {
 					$aliases = "{$this->alias}{$alias} {$joins} ";
 				}
 				return "UPDATE {$table} {$aliases}SET {$fields} {$conditions}";
-			break;
+				break;
 			case 'delete':
 				if (!empty($alias)) {
 					$aliases = "{$this->alias}{$alias} {$joins} ";
 				}
 				return "DELETE {$alias} FROM {$table} {$aliases}{$conditions}";
-			break;
+				break;
 			case 'schema':
 				foreach (array('columns', 'indexes', 'tableParameters') as $var) {
 					if (is_array(${$var})) {
@@ -1532,25 +1629,24 @@ class LegacyDboSource extends LegacyDataSource {
 					$columns .= ',';
 				}
 				return "CREATE TABLE {$table} (\n{$columns}{$indexes}){$tableParameters};";
-			break;
+				break;
 			case 'alter':
-			break;
+				break;
 		}
 	}
 
-/**
- * Merges a mixed set of string/array conditions
- *
- * @return array
- * @access private
- */
-	function __mergeConditions($query, $assoc) {
+	/**
+	 * Merges a mixed set of string/array conditions
+	 *
+	 * @return array
+	 */
+	private function __mergeConditions($query, $assoc) {
 		if (empty($assoc)) {
 			return $query;
 		}
 
 		if (is_array($query)) {
-			return array_merge((array)$assoc, $query);
+			return array_merge((array) $assoc, $query);
 		}
 
 		if (!empty($query)) {
@@ -1566,18 +1662,18 @@ class LegacyDboSource extends LegacyDataSource {
 		return $assoc;
 	}
 
-/**
- * Generates and executes an SQL UPDATE statement for given model, fields, and values.
- * For databases that do not support aliases in UPDATE queries.
- *
- * @param Model $model
- * @param array $fields
- * @param array $values
- * @param mixed $conditions
- * @return boolean Success
- * @access public
- */
-	function update(&$model, $fields = array(), $values = null, $conditions = null) {
+	/**
+	 * Generates and executes an SQL UPDATE statement for given model, fields, and values.
+	 * For databases that do not support aliases in UPDATE queries.
+	 *
+	 * @param Model $model
+	 * @param array $fields
+	 * @param array $values
+	 * @param mixed $conditions
+	 *
+	 * @return boolean Success
+	 */
+	public function update(&$model, $fields = array(), $values = null, $conditions = null) {
 		if ($values == null) {
 			$combined = $fields;
 		} else {
@@ -1586,8 +1682,8 @@ class LegacyDboSource extends LegacyDataSource {
 
 		$fields = implode(', ', $this->_prepareUpdateFields($model, $combined, empty($conditions)));
 
-		$alias = $joins = null;
-		$table = $this->fullTableName($model);
+		$alias      = $joins = null;
+		$table      = $this->fullTableName($model);
 		$conditions = $this->_matchRecords($model, $conditions);
 
 		if ($conditions === false) {
@@ -1602,17 +1698,17 @@ class LegacyDboSource extends LegacyDataSource {
 		return true;
 	}
 
-/**
- * Quotes and prepares fields and values for an SQL UPDATE statement
- *
- * @param Model $model
- * @param array $fields
- * @param boolean $quoteValues If values should be quoted, or treated as SQL snippets
- * @param boolean $alias Include the model alias in the field name
- * @return array Fields and values, quoted and preparted
- * @access protected
- */
-	function _prepareUpdateFields(&$model, $fields, $quoteValues = true, $alias = false) {
+	/**
+	 * Quotes and prepares fields and values for an SQL UPDATE statement
+	 *
+	 * @param Model $model
+	 * @param array $fields
+	 * @param boolean $quoteValues If values should be quoted, or treated as SQL snippets
+	 * @param boolean $alias Include the model alias in the field name
+	 *
+	 * @return array Fields and values, quoted and preparted
+	 */
+	protected function _prepareUpdateFields(&$model, $fields, $quoteValues = true, $alias = false) {
 		$quotedAlias = $this->startQuote . $model->alias . $this->endQuote;
 
 		$updates = array();
@@ -1621,8 +1717,8 @@ class LegacyDboSource extends LegacyDataSource {
 				$quoted = $model->escapeField($field);
 			} elseif (!$alias && strpos($field, '.') !== false) {
 				$quoted = $this->name(str_replace($quotedAlias . '.', '', str_replace(
-					$model->alias . '.', '', $field
-				)));
+							$model->alias . '.', '', $field
+						)));
 			} else {
 				$quoted = $this->name($field);
 			}
@@ -1637,28 +1733,28 @@ class LegacyDboSource extends LegacyDataSource {
 				$update .= $this->value($value, $model->getColumnType($field), false);
 			} elseif (!$alias) {
 				$update .= str_replace($quotedAlias . '.', '', str_replace(
-					$model->alias . '.', '', $value
-				));
+						$model->alias . '.', '', $value
+					));
 			} else {
 				$update .= $value;
 			}
-			$updates[] =  $update;
+			$updates[] = $update;
 		}
 		return $updates;
 	}
 
-/**
- * Generates and executes an SQL DELETE statement.
- * For databases that do not support aliases in UPDATE queries.
- *
- * @param Model $model
- * @param mixed $conditions
- * @return boolean Success
- * @access public
- */
-	function delete(&$model, $conditions = null) {
-		$alias = $joins = null;
-		$table = $this->fullTableName($model);
+	/**
+	 * Generates and executes an SQL DELETE statement.
+	 * For databases that do not support aliases in UPDATE queries.
+	 *
+	 * @param Model $model
+	 * @param mixed $conditions
+	 *
+	 * @return boolean Success
+	 */
+	public function delete(&$model, $conditions = null) {
+		$alias      = $joins = null;
+		$table      = $this->fullTableName($model);
 		$conditions = $this->_matchRecords($model, $conditions);
 
 		if ($conditions === false) {
@@ -1672,16 +1768,16 @@ class LegacyDboSource extends LegacyDataSource {
 		return true;
 	}
 
-/**
- * Gets a list of record IDs for the given conditions.	Used for multi-record updates and deletes
- * in databases that do not support aliases in UPDATE/DELETE queries.
- *
- * @param Model $model
- * @param mixed $conditions
- * @return array List of record IDs
- * @access protected
- */
-	function _matchRecords(&$model, $conditions = null) {
+	/**
+	 * Gets a list of record IDs for the given conditions.	Used for multi-record updates and deletes
+	 * in databases that do not support aliases in UPDATE/DELETE queries.
+	 *
+	 * @param Model $model
+	 * @param mixed $conditions
+	 *
+	 * @return array List of record IDs
+	 */
+	protected function _matchRecords(&$model, $conditions = null) {
 		if ($conditions === true) {
 			$conditions = $this->conditions(true);
 		} elseif ($conditions === null) {
@@ -1710,26 +1806,26 @@ class LegacyDboSource extends LegacyDataSource {
 			$idList = $model->find('all', array(
 				'fields' => "{$model->alias}.{$model->primaryKey}",
 				'conditions' => $conditions
-			));
+				));
 
 			if (empty($idList)) {
 				return false;
 			}
 			$conditions = $this->conditions(array(
 				$model->primaryKey => Set::extract($idList, "{n}.{$model->alias}.{$model->primaryKey}")
-			));
+				));
 		}
 		return $conditions;
 	}
 
-/**
- * Returns an array of SQL JOIN fragments from a model's associations
- *
- * @param object $model
- * @return array
- * @access protected
- */
-	function _getJoins($model) {
+	/**
+	 * Returns an array of SQL JOIN fragments from a model's associations
+	 *
+	 * @param object $model
+	 *
+	 * @return array
+	 */
+	protected function _getJoins($model) {
 		$join = array();
 		$joins = array_merge($model->getAssociated('hasOne'), $model->getAssociated('belongsTo'));
 
@@ -1741,26 +1837,25 @@ class LegacyDboSource extends LegacyDataSource {
 					'alias' => $assoc,
 					'type' => isset($assocData['type']) ? $assocData['type'] : 'LEFT',
 					'conditions' => trim($this->conditions(
-						$this->__mergeConditions($assocData['conditions'], $this->getConstraint($assocData['association'], $model, $model->{$assoc}, $assoc, $assocData)),
-						true, false, $model
-					))
-				));
+							$this->__mergeConditions($assocData['conditions'], $this->getConstraint($assocData['association'], $model, $model->{$assoc}, $assoc, $assocData)), true, false, $model
+						))
+					));
 			}
 		}
 		return $join;
 	}
 
-/**
- * Returns an SQL calculation, i.e. COUNT() or MAX()
- *
- * @param model $model
- * @param string $func Lowercase name of SQL function, i.e. 'count' or 'max'
- * @param array $params Function parameters (any values must be quoted manually)
- * @return string An SQL calculation function
- * @access public
- */
-	function calculate(&$model, $func, $params = array()) {
-		$params = (array)$params;
+	/**
+	 * Returns an SQL calculation, i.e. COUNT() or MAX()
+	 *
+	 * @param model $model
+	 * @param string $func Lowercase name of SQL function, i.e. 'count' or 'max'
+	 * @param array $params Function parameters (any values must be quoted manually)
+	 *
+	 * @return string An SQL calculation function
+	 */
+	public function calculate(&$model, $func, $params = array()) {
+		$params = (array) $params;
 
 		switch (strtolower($func)) {
 			case 'count':
@@ -1770,7 +1865,7 @@ class LegacyDboSource extends LegacyDataSource {
 				if (!isset($params[1])) {
 					$params[1] = 'count';
 				}
-				if (is_object($model) && $model->isVirtualField($params[0])){
+				if (is_object($model) && $model->isVirtualField($params[0])) {
 					$arg = $this->__quoteFields($model->getVirtualField($params[0]));
 				} else {
 					$arg = $this->name($params[0]);
@@ -1787,32 +1882,32 @@ class LegacyDboSource extends LegacyDataSource {
 					$arg = $this->name($params[0]);
 				}
 				return strtoupper($func) . '(' . $arg . ') AS ' . $this->name($params[1]);
-			break;
+				break;
 		}
 	}
 
-/**
- * Deletes all the records in a table and resets the count of the auto-incrementing
- * primary key, where applicable.
- *
- * @param mixed $table A string or model class representing the table to be truncated
- * @return boolean	SQL TRUNCATE TABLE statement, false if not applicable.
- * @access public
- */
-	function truncate($table) {
+	/**
+	 * Deletes all the records in a table and resets the count of the auto-incrementing
+	 * primary key, where applicable.
+	 *
+	 * @param mixed $table A string or model class representing the table to be truncated
+	 *
+	 * @return boolean	SQL TRUNCATE TABLE statement, false if not applicable.
+	 */
+	public function truncate($table) {
 		return $this->execute('TRUNCATE TABLE ' . $this->fullTableName($table));
 	}
 
-/**
- * Begin a transaction
- *
- * @param model $model
- * @return boolean True on success, false on fail
- * (i.e. if the database/model does not support transactions,
- * or a transaction has not started).
- * @access public
- */
-	function begin(&$model) {
+	/**
+	 * Begin a transaction
+	 *
+	 * @param model $model
+	 *
+	 * @return boolean True on success, false on fail
+	 * (i.e. if the database/model does not support transactions,
+	 * or a transaction has not started).
+	 */
+	public function begin(&$model) {
 		if (parent::begin($model) && $this->execute($this->_commands['begin'])) {
 			$this->_transactionStarted = true;
 			return true;
@@ -1820,16 +1915,16 @@ class LegacyDboSource extends LegacyDataSource {
 		return false;
 	}
 
-/**
- * Commit a transaction
- *
- * @param model $model
- * @return boolean True on success, false on fail
- * (i.e. if the database/model does not support transactions,
- * or a transaction has not started).
- * @access public
- */
-	function commit(&$model) {
+	/**
+	 * Commit a transaction
+	 *
+	 * @param model $model
+	 *
+	 * @return boolean True on success, false on fail
+	 * (i.e. if the database/model does not support transactions,
+	 * or a transaction has not started).
+	 */
+	public function commit(&$model) {
 		if (parent::commit($model) && $this->execute($this->_commands['commit'])) {
 			$this->_transactionStarted = false;
 			return true;
@@ -1837,16 +1932,16 @@ class LegacyDboSource extends LegacyDataSource {
 		return false;
 	}
 
-/**
- * Rollback a transaction
- *
- * @param model $model
- * @return boolean True on success, false on fail
- * (i.e. if the database/model does not support transactions,
- * or a transaction has not started).
- * @access public
- */
-	function rollback(&$model) {
+	/**
+	 * Rollback a transaction
+	 *
+	 * @param model $model
+	 *
+	 * @return boolean True on success, false on fail
+	 * (i.e. if the database/model does not support transactions,
+	 * or a transaction has not started).
+	 */
+	public function rollback(&$model) {
 		if (parent::rollback($model) && $this->execute($this->_commands['rollback'])) {
 			$this->_transactionStarted = false;
 			return true;
@@ -1854,22 +1949,22 @@ class LegacyDboSource extends LegacyDataSource {
 		return false;
 	}
 
-/**
- * Creates a default set of conditions from the model if $conditions is null/empty.
- * If conditions are supplied then they will be returned.  If a model doesn't exist and no conditions
- * were provided either null or false will be returned based on what was input.
- *
- * @param object $model
- * @param mixed $conditions Array of conditions, conditions string, null or false. If an array of conditions,
- *   or string conditions those conditions will be returned.  With other values the model's existance will be checked.
- *   If the model doesn't exist a null or false will be returned depending on the input value.
- * @param boolean $useAlias Use model aliases rather than table names when generating conditions
- * @return mixed Either null, false, $conditions or an array of default conditions to use.
- * @see DboSource::update()
- * @see DboSource::conditions()
- * @access public
- */
-	function defaultConditions(&$model, $conditions, $useAlias = true) {
+	/**
+	 * Creates a default set of conditions from the model if $conditions is null/empty.
+	 * If conditions are supplied then they will be returned.  If a model doesn't exist and no conditions
+	 * were provided either null or false will be returned based on what was input.
+	 *
+	 * @param object $model
+	 * @param mixed $conditions Array of conditions, conditions string, null or false. If an array of conditions,
+	 *   or string conditions those conditions will be returned.  With other values the model's existance will be checked.
+	 *   If the model doesn't exist a null or false will be returned depending on the input value.
+	 * @param boolean $useAlias Use model aliases rather than table names when generating conditions
+	 *
+	 * @return mixed Either null, false, $conditions or an array of default conditions to use.
+	 * @see DboSource::update()
+	 * @see DboSource::conditions()
+	 */
+	public function defaultConditions(&$model, $conditions, $useAlias = true) {
 		if (!empty($conditions)) {
 			return $conditions;
 		}
@@ -1887,16 +1982,16 @@ class LegacyDboSource extends LegacyDataSource {
 		return array("{$alias}.{$model->primaryKey}" => $model->getID());
 	}
 
-/**
- * Returns a key formatted like a string Model.fieldname(i.e. Post.title, or Country.name)
- *
- * @param unknown_type $model
- * @param unknown_type $key
- * @param unknown_type $assoc
- * @return string
- * @access public
- */
-	function resolveKey($model, $key, $assoc = null) {
+	/**
+	 * Returns a key formatted like a string Model.fieldname(i.e. Post.title, or Country.name)
+	 *
+	 * @param unknown_type $model
+	 * @param unknown_type $key
+	 * @param unknown_type $assoc
+	 *
+	 * @return string
+	 */
+	public function resolveKey($model, $key, $assoc = null) {
 		if (empty($assoc)) {
 			$assoc = $model->alias;
 		}
@@ -1906,14 +2001,14 @@ class LegacyDboSource extends LegacyDataSource {
 		return $key;
 	}
 
-/**
- * Private helper method to remove query metadata in given data array.
- *
- * @param array $data
- * @return array
- * @access public
- */
-	function __scrubQueryData($data) {
+	/**
+	 * Private helper method to remove query metadata in given data array.
+	 *
+	 * @param array $data
+	 *
+	 * @return array
+	 */
+	private function __scrubQueryData($data) {
 		foreach (array('conditions', 'fields', 'joins', 'order', 'limit', 'offset', 'group') as $key) {
 			if (empty($data[$key])) {
 				$data[$key] = array();
@@ -1922,14 +2017,15 @@ class LegacyDboSource extends LegacyDataSource {
 		return $data;
 	}
 
-/**
- * Converts model virtual fields into sql expressions to be fetched later
- *
- * @param Model $model
- * @param string $alias Alias tablename
- * @param mixed $fields virtual fields to be used on query
- * @return array
- */
+	/**
+	 * Converts model virtual fields into sql expressions to be fetched later
+	 *
+	 * @param Model $model
+	 * @param string $alias Alias tablename
+	 * @param mixed $fields virtual fields to be used on query
+	 *
+	 * @return array
+	 */
 	function _constructVirtualFields(&$model, $alias, $fields) {
 		$virtual = array();
 		foreach ($fields as $field) {
@@ -1940,17 +2036,17 @@ class LegacyDboSource extends LegacyDataSource {
 		return $virtual;
 	}
 
-/**
- * Generates the fields list of an SQL query.
- *
- * @param Model $model
- * @param string $alias Alias tablename
- * @param mixed $fields
- * @param boolean $quote If false, returns fields array unquoted
- * @return array
- * @access public
- */
-	function fields(&$model, $alias = null, $fields = array(), $quote = true) {
+	/**
+	 * Generates the fields list of an SQL query.
+	 *
+	 * @param Model $model
+	 * @param string $alias Alias tablename
+	 * @param mixed $fields
+	 * @param boolean $quote If false, returns fields array unquoted
+	 *
+	 * @return array
+	 */
+	public function fields(&$model, $alias = null, $fields = array(), $quote = true) {
 		if (empty($alias)) {
 			$alias = $model->alias;
 		}
@@ -2010,7 +2106,7 @@ class LegacyDboSource extends LegacyDataSource {
 				}
 				if (is_object($fields[$i]) && isset($fields[$i]->type) && $fields[$i]->type === 'expression') {
 					$fields[$i] = $fields[$i]->value;
-				} elseif (preg_match('/^\(.*\)\s' . $this->alias . '.*/i', $fields[$i])){
+				} elseif (preg_match('/^\(.*\)\s' . $this->alias . '.*/i', $fields[$i])) {
 					continue;
 				} elseif (!preg_match('/^.+\\(.*\\)/', $fields[$i])) {
 					$prepend = '';
@@ -2025,7 +2121,7 @@ class LegacyDboSource extends LegacyDataSource {
 						$prefix = !(
 							strpos($fields[$i], ' ') !== false ||
 							strpos($fields[$i], '(') !== false
-						);
+							);
 						$fields[$i] = $this->name(($prefix ? $alias . '.' : '') . $fields[$i]);
 					} else {
 						$value = array();
@@ -2059,23 +2155,23 @@ class LegacyDboSource extends LegacyDataSource {
 		return $this->cacheMethod(__FUNCTION__, $cacheKey, array_unique($fields));
 	}
 
-/**
- * Creates a WHERE clause by parsing given conditions data.  If an array or string
- * conditions are provided those conditions will be parsed and quoted.  If a boolean
- * is given it will be integer cast as condition.  Null will return 1 = 1.
- *
- * Results of this method are stored in a memory cache.  This improves performance, but
- * because the method uses a simple hashing algorithm it can infrequently have collisions.
- * Setting DboSource::$cacheMethods to false will disable the memory cache.
- *
- * @param mixed $conditions Array or string of conditions, or any value.
- * @param boolean $quoteValues If true, values should be quoted
- * @param boolean $where If true, "WHERE " will be prepended to the return value
- * @param Model $model A reference to the Model instance making the query
- * @return string SQL fragment
- * @access public
- */
-	function conditions($conditions, $quoteValues = true, $where = true, $model = null) {
+	/**
+	 * Creates a WHERE clause by parsing given conditions data.  If an array or string
+	 * conditions are provided those conditions will be parsed and quoted.  If a boolean
+	 * is given it will be integer cast as condition.  Null will return 1 = 1.
+	 *
+	 * Results of this method are stored in a memory cache.  This improves performance, but
+	 * because the method uses a simple hashing algorithm it can infrequently have collisions.
+	 * Setting DboSource::$cacheMethods to false will disable the memory cache.
+	 *
+	 * @param mixed $conditions Array or string of conditions, or any value.
+	 * @param boolean $quoteValues If true, values should be quoted
+	 * @param boolean $where If true, "WHERE " will be prepended to the return value
+	 * @param Model $model A reference to the Model instance making the query
+	 *
+	 * @return string SQL fragment
+	 */
+	public function conditions($conditions, $quoteValues = true, $where = true, $model = null) {
 		if (is_object($model)) {
 			$cacheKey = array(
 				$model->useDbConfig,
@@ -2110,7 +2206,7 @@ class LegacyDboSource extends LegacyDataSource {
 			return $this->cacheMethod(__FUNCTION__, $cacheKey, $clause . implode(' AND ', $out));
 		}
 		if ($conditions === false || $conditions === true) {
-			return $this->cacheMethod(__FUNCTION__, $cacheKey,  $clause . (int)$conditions . ' = 1');
+			return $this->cacheMethod(__FUNCTION__, $cacheKey, $clause . (int) $conditions . ' = 1');
 		}
 
 		if (empty($conditions) || trim($conditions) == '') {
@@ -2129,16 +2225,16 @@ class LegacyDboSource extends LegacyDataSource {
 		return $this->cacheMethod(__FUNCTION__, $cacheKey, $clause . $conditions);
 	}
 
-/**
- * Creates a WHERE clause by parsing given conditions array.  Used by DboSource::conditions().
- *
- * @param array $conditions Array or string of conditions
- * @param boolean $quoteValues If true, values should be quoted
- * @param Model $model A reference to the Model instance making the query
- * @return string SQL fragment
- * @access public
- */
-	function conditionKeysToString($conditions, $quoteValues = true, $model = null) {
+	/**
+	 * Creates a WHERE clause by parsing given conditions array.  Used by DboSource::conditions().
+	 *
+	 * @param array $conditions Array or string of conditions
+	 * @param boolean $quoteValues If true, values should be quoted
+	 * @param Model $model A reference to the Model instance making the query
+	 *
+	 * @return string SQL fragment
+	 */
+	public function conditionKeysToString($conditions, $quoteValues = true, $model = null) {
 		$c = 0;
 		$out = array();
 		$data = $columnType = null;
@@ -2152,7 +2248,7 @@ class LegacyDboSource extends LegacyDataSource {
 				$valueInsert = (
 					!empty($value) &&
 					(substr_count($key, '?') == count($value) || substr_count($key, ':') == count($value))
-				);
+					);
 			}
 
 			if (is_numeric($key) && empty($value)) {
@@ -2178,12 +2274,11 @@ class LegacyDboSource extends LegacyDataSource {
 					if ($not) {
 						$out[] = $not . '(' . $value[0] . ')';
 					} else {
-						$out[] = $value[0] ;
+						$out[] = $value[0];
 					}
 				} else {
 					$out[] = '(' . $not . '(' . implode(') ' . strtoupper($key) . ' (', $value) . '))';
 				}
-
 			} else {
 				if (is_object($value) && isset($value->type)) {
 					if ($value->type == 'identifier') {
@@ -2235,20 +2330,22 @@ class LegacyDboSource extends LegacyDataSource {
 		return $out;
 	}
 
-/**
- * Extracts a Model.field identifier and an SQL condition operator from a string, formats
- * and inserts values, and composes them into an SQL snippet.
- *
- * @param Model $model Model object initiating the query
- * @param string $key An SQL key snippet containing a field and optional SQL operator
- * @param mixed $value The value(s) to be inserted in the string
- * @return string
- * @access private
- */
-	function __parseKey(&$model, $key, $value) {
-		$operatorMatch = '/^(((' . implode(')|(', $this->__sqlOps);
+	/**
+	 * Extracts a Model.field identifier and an SQL condition operator from a string, formats
+	 * and inserts values, and composes them into an SQL snippet.
+	 *
+	 * @param Model $model Model object initiating the query
+	 * @param string $key An SQL key snippet containing a field and optional SQL operator
+	 * @param mixed $value The value(s) to be inserted in the string
+	 *
+	 * @return string
+	 */
+	private function __parseKey(&$model, $key, $value) {
+		$operatorMatch  = '/^(((' . implode(')|(', $this->__sqlOps);
 		$operatorMatch .= ')\\x20?)|<[>=]?(?![^>]+>)\\x20?|[>=!]{1,3}(?!<)\\x20?)/is';
-		$bound = (strpos($key, '?') !== false || (is_array($value) && strpos($key, ':') !== false));
+		$bound          = (strpos($key, '?') !== false 
+			|| (is_array($value) 
+			&& strpos($key, ':') !== false));
 
 		if (!strpos($key, ' ')) {
 			$operator = '=';
@@ -2288,7 +2385,7 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 
 		if ($bound) {
-			return  String::insert($key . ' ' . trim($operator), $value);
+			return String::insert($key . ' ' . trim($operator), $value);
 		}
 
 		if (!preg_match($operatorMatch, trim($operator))) {
@@ -2302,22 +2399,22 @@ class LegacyDboSource extends LegacyDataSource {
 			switch ($operator) {
 				case '=':
 					$operator = 'IN';
-				break;
+					break;
 				case '!=':
 				case '<>':
 					$operator = 'NOT IN';
-				break;
+					break;
 			}
 			$value = "({$value})";
 		} elseif ($null) {
 			switch ($operator) {
 				case '=':
 					$operator = 'IS';
-				break;
+					break;
 				case '!=':
 				case '<>':
 					$operator = 'IS NOT';
-				break;
+					break;
 			}
 		}
 		if ($virtual) {
@@ -2326,15 +2423,15 @@ class LegacyDboSource extends LegacyDataSource {
 		return "{$key} {$operator} {$value}";
 	}
 
-/**
- * Quotes Model.fields
- *
- * @param string $conditions
- * @return string or false if no match
- * @access private
- */
-	function __quoteFields($conditions) {
-		$start = $end  = null;
+	/**
+	 * Quotes Model.fields
+	 *
+	 * @param string $conditions
+	 *
+	 * @return string or false if no match
+	 */
+	private function __quoteFields($conditions) {
+		$start = $end = null;
 		$original = $conditions;
 
 		if (!empty($this->startQuote)) {
@@ -2352,29 +2449,29 @@ class LegacyDboSource extends LegacyDataSource {
 		return $original;
 	}
 
-/**
- * Auxiliary function to quote matches `Model.fields` from a preg_replace_callback call
- *
- * @param string matched string
- * @return string quoted strig
- * @access private
- */
-	function __quoteMatchedField($match) {
+	/**
+	 * Auxiliary function to quote matches `Model.fields` from a preg_replace_callback call
+	 *
+	 * @param string matched string
+	 *
+	 * @return string quoted strig
+	 */
+	private function __quoteMatchedField($match) {
 		if (is_numeric($match[0])) {
 			return $match[0];
 		}
 		return $this->name($match[0]);
 	}
 
-/**
- * Returns a limit statement in the correct format for the particular database.
- *
- * @param integer $limit Limit of results returned
- * @param integer $offset Offset from which to start results
- * @return string SQL limit/offset statement
- * @access public
- */
-	function limit($limit, $offset = null) {
+	/**
+	 * Returns a limit statement in the correct format for the particular database.
+	 *
+	 * @param integer $limit Limit of results returned
+	 * @param integer $offset Offset from which to start results
+	 *
+	 * @return string SQL limit/offset statement
+	 */
+	public function limit($limit, $offset = null) {
 		if ($limit) {
 			$rt = '';
 			if (!strpos(strtolower($limit), 'limit') || strpos(strtolower($limit), 'limit') === 0) {
@@ -2391,16 +2488,16 @@ class LegacyDboSource extends LegacyDataSource {
 		return null;
 	}
 
-/**
- * Returns an ORDER BY clause as a string.
- *
- * @param string $key Field reference, as a key (i.e. Post.title)
- * @param string $direction Direction (ASC or DESC)
- * @param object $model model reference (used to look for virtual field)
- * @return string ORDER BY clause
- * @access public
- */
-	function order($keys, $direction = 'ASC', $model = null) {
+	/**
+	 * Returns an ORDER BY clause as a string.
+	 *
+	 * @param string $key Field reference, as a key (i.e. Post.title)
+	 * @param string $direction Direction (ASC or DESC)
+	 * @param object $model model reference (used to look for virtual field)
+	 *
+	 * @return string ORDER BY clause
+	 */
+	public function order($keys, $direction = 'ASC', $model = null) {
 		if (!is_array($keys)) {
 			$keys = array($keys);
 		}
@@ -2442,7 +2539,7 @@ class LegacyDboSource extends LegacyDataSource {
 			$key = trim($key);
 
 			if (is_object($model) && $model->isVirtualField($key)) {
-				$key =  '(' . $this->__quoteFields($model->getVirtualField($key)) . ')';
+				$key = '(' . $this->__quoteFields($model->getVirtualField($key)) . ')';
 			}
 
 			if (strpos($key, '.')) {
@@ -2460,19 +2557,19 @@ class LegacyDboSource extends LegacyDataSource {
 		return '';
 	}
 
-/**
- * Create a GROUP BY SQL clause
- *
- * @param string $group Group By Condition
- * @return mixed string condition or null
- * @access public
- */
-	function group($group, $model = null) {
+	/**
+	 * Create a GROUP BY SQL clause
+	 *
+	 * @param string $group Group By Condition
+	 *
+	 * @return mixed string condition or null
+	 */
+	public function group($group, $model = null) {
 		if ($group) {
 			if (!is_array($group)) {
 				$group = array($group);
 			}
-			foreach($group as $index => $key) {
+			foreach ($group as $index => $key) {
 				if (is_object($model) && $model->isVirtualField($key)) {
 					$group[$index] = '(' . $model->getVirtualField($key) . ')';
 				}
@@ -2483,25 +2580,24 @@ class LegacyDboSource extends LegacyDataSource {
 		return null;
 	}
 
-/**
- * Disconnects database, kills the connection and says the connection is closed.
- *
- * @return void
- * @access public
- */
-	function close() {
+	/**
+	 * Disconnects database, kills the connection and says the connection is closed.
+	 *
+	 * @return void
+	 */
+	public function close() {
 		$this->disconnect();
 	}
 
-/**
- * Checks if the specified table contains any record matching specified SQL
- *
- * @param Model $model Model to search
- * @param string $sql SQL WHERE clause (condition only, not the "WHERE" part)
- * @return boolean True if the table has a matching record, else false
- * @access public
- */
-	function hasAny(&$Model, $sql) {
+	/**
+	 * Checks if the specified table contains any record matching specified SQL
+	 *
+	 * @param Model $model Model to search
+	 * @param string $sql SQL WHERE clause (condition only, not the "WHERE" part)
+	 *
+	 * @return boolean True if the table has a matching record, else false
+	 */
+	public function hasAny(&$Model, $sql) {
 		$sql = $this->conditions($sql);
 		$table = $this->fullTableName($Model);
 		$alias = $this->alias . $this->name($Model->alias);
@@ -2516,14 +2612,14 @@ class LegacyDboSource extends LegacyDataSource {
 		return false;
 	}
 
-/**
- * Gets the length of a database-native column description, or null if no length
- *
- * @param string $real Real database-layer column type (i.e. "varchar(255)")
- * @return mixed An integer or string representing the length of the column
- * @access public
- */
-	function length($real) {
+	/**
+	 * Gets the length of a database-native column description, or null if no length
+	 *
+	 * @param string $real Real database-layer column type (i.e. "varchar(255)")
+	 *
+	 * @return mixed An integer or string representing the length of the column
+	 */
+	public function length($real) {
 		if (!preg_match_all('/([\w\s]+)(?:\((\d+)(?:,(\d+))?\))?(\sunsigned)?(\szerofill)?/', $real, $result)) {
 			trigger_error(__("FIXME: Can't parse field: " . $real, true), E_USER_WARNING);
 			$col = str_replace(array(')', 'unsigned'), '', $real);
@@ -2550,7 +2646,7 @@ class LegacyDboSource extends LegacyDataSource {
 
 		$isFloat = in_array($type, array('dec', 'decimal', 'float', 'numeric', 'double'));
 		if ($isFloat && $offset) {
-			return $length.','.$offset;
+			return $length . ',' . $offset;
 		}
 
 		if (($real[0] == $type) && (count($real) == 1)) {
@@ -2577,14 +2673,14 @@ class LegacyDboSource extends LegacyDataSource {
 		return intval($length);
 	}
 
-/**
- * Translates between PHP boolean values and Database (faked) boolean values
- *
- * @param mixed $data Value to be translated
- * @return mixed Converted boolean value
- * @access public
- */
-	function boolean($data) {
+	/**
+	 * Translates between PHP boolean values and Database (faked) boolean values
+	 *
+	 * @param mixed $data Value to be translated
+	 *
+	 * @return mixed Converted boolean value
+	 */
+	public function boolean($data) {
 		if ($data === true || $data === false) {
 			if ($data === true) {
 				return 1;
@@ -2595,15 +2691,14 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Inserts multiple values into a table
- *
- * @param string $table
- * @param string $fields
- * @param array $values
- * @access protected
- */
-	function insertMulti($table, $fields, $values) {
+	/**
+	 * Inserts multiple values into a table
+	 *
+	 * @param string $table
+	 * @param string $fields
+	 * @param array $values
+	 */
+	public function insertMulti($table, $fields, $values) {
 		$table = $this->fullTableName($table);
 		if (is_array($fields)) {
 			$fields = implode(', ', array_map(array(&$this, 'name'), $fields));
@@ -2614,27 +2709,27 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 	}
 
-/**
- * Returns an array of the indexes in given datasource name.
- *
- * @param string $model Name of model to inspect
- * @return array Fields in table. Keys are column and unique
- * @access public
- */
-	function index($model) {
+	/**
+	 * Returns an array of the indexes in given datasource name.
+	 *
+	 * @param string $model Name of model to inspect
+	 *
+	 * @return array Fields in table. Keys are column and unique
+	 */
+	public function index($model) {
 		return false;
 	}
 
-/**
- * Generate a database-native schema for the given Schema object
- *
- * @param object $schema An instance of a subclass of CakeSchema
- * @param string $tableName Optional.  If specified only the table name given will be generated.
- *   Otherwise, all tables defined in the schema are generated.
- * @return string
- * @access public
- */
-	function createSchema($schema, $tableName = null) {
+	/**
+	 * Generate a database-native schema for the given Schema object
+	 *
+	 * @param object $schema An instance of a subclass of CakeSchema
+	 * @param string $tableName Optional.  If specified only the table name given will be generated.
+	 *   Otherwise, all tables defined in the schema are generated.
+	 *
+	 * @return string
+	 */
+	public function createSchema($schema, $tableName = null) {
 		if (!is_a($schema, 'CakeSchema')) {
 			trigger_error(__('Invalid schema object', true), E_USER_WARNING);
 			return null;
@@ -2677,26 +2772,27 @@ class LegacyDboSource extends LegacyDataSource {
 		return $out;
 	}
 
-/**
- * Generate a alter syntax from	 CakeSchema::compare()
- *
- * @param unknown_type $schema
- * @return boolean
- */
+	/**
+	 * Generate a alter syntax from	 CakeSchema::compare()
+	 *
+	 * @param unknown_type $schema
+	 *
+	 * @return boolean
+	 */
 	function alterSchema($compare, $table = null) {
 		return false;
 	}
 
-/**
- * Generate a "drop table" statement for the given Schema object
- *
- * @param object $schema An instance of a subclass of CakeSchema
- * @param string $table Optional.  If specified only the table name given will be generated.
- *   Otherwise, all tables defined in the schema are generated.
- * @return string
- * @access public
- */
-	function dropSchema($schema, $table = null) {
+	/**
+	 * Generate a "drop table" statement for the given Schema object
+	 *
+	 * @param object $schema An instance of a subclass of CakeSchema
+	 * @param string $table Optional.  If specified only the table name given will be generated.
+	 *   Otherwise, all tables defined in the schema are generated.
+	 *
+	 * @return string
+	 */
+	public function dropSchema($schema, $table = null) {
 		if (!is_a($schema, 'CakeSchema')) {
 			trigger_error(__('Invalid schema object', true), E_USER_WARNING);
 			return null;
@@ -2711,15 +2807,15 @@ class LegacyDboSource extends LegacyDataSource {
 		return $out;
 	}
 
-/**
- * Generate a database-native column schema string
- *
- * @param array $column An array structured like the following: array('name'=>'value', 'type'=>'value'[, options]),
- *   where options can be 'default', 'length', or 'key'.
- * @return string
- * @access public
- */
-	function buildColumn($column) {
+	/**
+	 * Generate a database-native column schema string
+	 *
+	 * @param array $column An array structured like the following: array('name'=>'value', 'type'=>'value'[, options]),
+	 *   where options can be 'default', 'length', or 'key'.
+	 *
+	 * @return string
+	 */
+	public function buildColumn($column) {
 		$name = $type = null;
 		extract(array_merge(array('null' => true), $column));
 
@@ -2776,16 +2872,16 @@ class LegacyDboSource extends LegacyDataSource {
 		return $out;
 	}
 
-/**
- * Build the field parameters, in a position
- *
- * @param string $columnString The partially built column string
- * @param array $columnData The array of column data.
- * @param string $position The position type to use. 'beforeDefault' or 'afterDefault' are common
- * @return string a built column with the field parameters added.
- * @access public
- */
-	function _buildFieldParameters($columnString, $columnData, $position) {
+	/**
+	 * Build the field parameters, in a position
+	 *
+	 * @param string $columnString The partially built column string
+	 * @param array $columnData The array of column data.
+	 * @param string $position The position type to use. 'beforeDefault' or 'afterDefault' are common
+	 *
+	 * @return string a built column with the field parameters added.
+	 */
+	public function _buildFieldParameters($columnString, $columnData, $position) {
 		foreach ($this->fieldParameters as $paramName => $value) {
 			if (isset($columnData[$paramName]) && $value['position'] == $position) {
 				if (isset($value['options']) && !in_array($columnData[$paramName], $value['options'])) {
@@ -2801,15 +2897,15 @@ class LegacyDboSource extends LegacyDataSource {
 		return $columnString;
 	}
 
-/**
- * Format indexes for create table
- *
- * @param array $indexes
- * @param string $table
- * @return array
- * @access public
- */
-	function buildIndex($indexes, $table = null) {
+	/**
+	 * Format indexes for create table
+	 *
+	 * @param array $indexes
+	 * @param string $table
+	 *
+	 * @return array
+	 */
+	public function buildIndex($indexes, $table = null) {
 		$join = array();
 		foreach ($indexes as $name => $value) {
 			$out = '';
@@ -2832,15 +2928,15 @@ class LegacyDboSource extends LegacyDataSource {
 		return $join;
 	}
 
-/**
- * Read additional table parameters
- *
- * @param array $parameters
- * @param string $table
- * @return array
- * @access public
- */
-	function readTableParameters($name) {
+	/**
+	 * Read additional table parameters
+	 *
+	 * @param array $parameters
+	 * @param string $table
+	 *
+	 * @return array
+	 */
+	public function readTableParameters($name) {
 		$parameters = array();
 		if ($this->isInterfaceSupported('listDetailedSources')) {
 			$currentTableDetails = $this->listDetailedSources($name);
@@ -2853,15 +2949,15 @@ class LegacyDboSource extends LegacyDataSource {
 		return $parameters;
 	}
 
-/**
- * Format parameters for create table
- *
- * @param array $parameters
- * @param string $table
- * @return array
- * @access public
- */
-	function buildTableParameters($parameters, $table = null) {
+	/**
+	 * Format parameters for create table
+	 *
+	 * @param array $parameters
+	 * @param string $table
+	 *
+	 * @return array
+	 */
+	public function buildTableParameters($parameters, $table = null) {
 		$result = array();
 		foreach ($parameters as $name => $value) {
 			if (isset($this->tableParameters[$name])) {
@@ -2874,14 +2970,14 @@ class LegacyDboSource extends LegacyDataSource {
 		return $result;
 	}
 
-/**
- * Guesses the data type of an array
- *
- * @param string $value
- * @return void
- * @access public
- */
-	function introspectType($value) {
+	/**
+	 * Guesses the data type of an array
+	 *
+	 * @param string $value
+	 *
+	 * @return void
+	 */
+	public function introspectType($value) {
 		if (!is_array($value)) {
 			if ($value === true || $value === false) {
 				return 'boolean';
@@ -2929,4 +3025,5 @@ class LegacyDboSource extends LegacyDataSource {
 		}
 		return 'string';
 	}
+
 }

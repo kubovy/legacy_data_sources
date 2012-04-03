@@ -1,130 +1,186 @@
 <?php
-/**
- * MySQL Base layer for DBO
- *
- * PHP versions 4 and 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       cake
- * @subpackage    cake.cake.libs.model.datasources.dbo
- * @since         CakePHP(tm) v 0.10.5.1790
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
 
+/**
+ * Bolos Content Manager (http://bcm.poterion.com)
+ * Copyright (c) 2005-2012, Poterion (http://www.poterion.com)
+ * 
+ * @category   Database
+ * @package    com.poterion.BCM.Plugin.LegacyDataSources
+ * @subpackage com.poterion.BCM.Plugin.LegacyDataSources.Model.Datasource.Database
+ * @author     Jan Kubovy <jan@kubovy.eu>
+ * @copyright  2005-2012 Copyright (c) Poterion (http://www.poterion.com)
+ * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @link       http://bcm.poterion.com Bolos CMS
+ * @since      1.0.0
+ */
 App::uses('LegacyDboSource', 'LegacyDataSources.Model/Datasource');
 
 /**
  * Provides common base for MySQL & MySQLi connections
  *
- * @package       cake
- * @subpackage    cake.cake.libs.model.datasources.dbo
+ * @category   Database
+ * @package    com.poterion.BCM.Plugin.LegacyDataSources
+ * @subpackage com.poterion.BCM.Plugin.LegacyDataSources.Model.Datasource.Database
+ * @author     Jan Kubovy <jan@kubovy.eu>
+ * @copyright  2005-2012 Copyright (c) Poterion (http://www.poterion.com)
+ * @license    MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @link       http://bcm.poterion.com Bolos CMS
+ * @since      1.0.0
  */
 class LegacyMysqlBase extends LegacyDboSource {
 
-/**
- * Description property.
- *
- * @var string
- */
-	var $description = "Legacy MySQL DBO Base Driver";
+	/**
+	 * Description property.
+	 *
+	 * @var String
+	 */
+	public $description = "Legacy MySQL DBO Base Driver";
 
-/**
- * Start quote
- *
- * @var string
- */
-	var $startQuote = "`";
+	/**
+	 * Start quote
+	 *
+	 * @var String
+	 */
+	public $startQuote = "`";
 
-/**
- * End quote
- *
- * @var string
- */
-	var $endQuote = "`";
+	/**
+	 * End quote
+	 *
+	 * @var String
+	 */
+	public $endQuote = "`";
 
-/**
- * use alias for update and delete. Set to true if version >= 4.1
- *
- * @var boolean
- * @access protected
- */
-	var $_useAlias = true;
+	/**
+	 * use alias for update and delete. Set to true if version >= 4.1
+	 *
+	 * @var boolean
+	 * @access protected
+	 */
+	protected $_useAlias = true;
 
-/**
- * Index of basic SQL commands
- *
- * @var array
- * @access protected
- */
-	var $_commands = array(
-		'begin'    => 'START TRANSACTION',
-		'commit'   => 'COMMIT',
+	/**
+	 * Index of basic SQL commands
+	 *
+	 * @var array
+	 * @access protected
+	 */
+	protected $_commands = array(
+		'begin' => 'START TRANSACTION',
+		'commit' => 'COMMIT',
 		'rollback' => 'ROLLBACK'
 	);
 
-/**
- * List of engine specific additional field parameters used on table creating
- *
- * @var array
- * @access public
- */
-	var $fieldParameters = array(
-		'charset' => array('value' => 'CHARACTER SET', 'quote' => false, 'join' => ' ', 'column' => false, 'position' => 'beforeDefault'),
-		'collate' => array('value' => 'COLLATE', 'quote' => false, 'join' => ' ', 'column' => 'Collation', 'position' => 'beforeDefault'),
-		'comment' => array('value' => 'COMMENT', 'quote' => true, 'join' => ' ', 'column' => 'Comment', 'position' => 'afterDefault')
+	/**
+	 * List of engine specific additional field parameters used on table creating
+	 *
+	 * @var array
+	 * @access public
+	 */
+	public $fieldParameters = array(
+		'charset' => array(
+			'value'    => 'CHARACTER SET',
+			'quote'    => false,
+			'join'     => ' ',
+			'column'   => false,
+			'position' => 'beforeDefault'
+		),
+		'collate' => array(
+			'value'    => 'COLLATE',
+			'quote'    => false,
+			'join'     => ' ',
+			'column'   => 'Collation',
+			'position' => 'beforeDefault'
+		),
+		'comment' => array(
+			'value'    => 'COMMENT',
+			'quote'    => true,
+			'join'     => ' ',
+			'column'   => 'Comment',
+			'position' => 'afterDefault'
+		)
 	);
 
-/**
- * List of table engine specific parameters used on table creating
- *
- * @var array
- * @access public
- */
-	var $tableParameters = array(
-		'charset' => array('value' => 'DEFAULT CHARSET', 'quote' => false, 'join' => '=', 'column' => 'charset'),
-		'collate' => array('value' => 'COLLATE', 'quote' => false, 'join' => '=', 'column' => 'Collation'),
-		'engine' => array('value' => 'ENGINE', 'quote' => false, 'join' => '=', 'column' => 'Engine')
+	/**
+	 * List of table engine specific parameters used on table creating
+	 *
+	 * @var array
+	 * @access public
+	 */
+	public $tableParameters = array(
+		'charset' => array(
+			'value'  => 'DEFAULT CHARSET',
+			'quote'  => false,
+			'join'   => '=',
+			'column' => 'charset'),
+		'collate' => array(
+			'value'  => 'COLLATE',
+			'quote'  => false,
+			'join'   => '=',
+			'column' => 'Collation'
+		),
+		'engine' => array(
+			'value'  => 'ENGINE',
+			'quote'  => false,
+			'join'   => '=',
+			'column' => 'Engine'
+		)
 	);
 
-/**
- * MySQL column definition
- *
- * @var array
- */
-	var $columns = array(
+	/**
+	 * MySQL column definition
+	 *
+	 * @var array
+	 */
+	public $columns = array(
 		'primary_key' => array('name' => 'NOT NULL AUTO_INCREMENT'),
 		'string' => array('name' => 'varchar', 'limit' => '255'),
 		'text' => array('name' => 'text'),
-		'integer' => array('name' => 'int', 'limit' => '11', 'formatter' => 'intval'),
+		'integer' => array(
+			'name'      => 'int',
+			'limit'     => '11',
+			'formatter' => 'intval'
+		),
 		'float' => array('name' => 'float', 'formatter' => 'floatval'),
-		'datetime' => array('name' => 'datetime', 'format' => 'Y-m-d H:i:s', 'formatter' => 'date'),
-		'timestamp' => array('name' => 'timestamp', 'format' => 'Y-m-d H:i:s', 'formatter' => 'date'),
-		'time' => array('name' => 'time', 'format' => 'H:i:s', 'formatter' => 'date'),
-		'date' => array('name' => 'date', 'format' => 'Y-m-d', 'formatter' => 'date'),
+		'datetime' => array(
+			'name'      => 'datetime',
+			'format'    => 'Y-m-d H:i:s',
+			'formatter' => 'date'
+			),
+		'timestamp' => array(
+			'name'      => 'timestamp',
+			'format'    => 'Y-m-d H:i:s',
+			'formatter' => 'date'
+		),
+		'time' => array(
+			'name'      => 'time',
+			'format'    => 'H:i:s',
+			'formatter' => 'date'
+		),
+		'date' => array(
+			'name'      => 'date',
+			'format'    => 'Y-m-d',
+			'formatter' => 'date'
+		),
 		'binary' => array('name' => 'blob'),
 		'boolean' => array('name' => 'tinyint', 'limit' => '1')
 	);
 
-/**
- * Returns an array of the fields in given table name.
- *
- * @param string $tableName Name of database table to inspect
- * @return array Fields in table. Keys are name and type
- */
-	function describe(&$model) {
+	/**
+	 * Returns an array of the fields in given table name.
+	 *
+	 * @param string &$model Name of database table to inspect
+	 * 
+	 * @return array Fields in table. Keys are name and type
+	 */
+	public function describe(&$model) {
 		$cache = parent::describe($model);
 		if ($cache != null) {
 			return $cache;
 		}
 		$fields = false;
-		$cols = $this->query('SHOW FULL COLUMNS FROM ' . $this->fullTableName($model));
+		$cols   = $this->query(
+			'SHOW FULL COLUMNS FROM ' . $this->fullTableName($model)
+		);
 
 		foreach ($cols as $column) {
 			$colKey = array_keys($column);
@@ -138,16 +194,23 @@ class LegacyMysqlBase extends LegacyDboSource {
 					'default' => $column[0]['Default'],
 					'length' => $this->length($column[0]['Type']),
 				);
-				if (!empty($column[0]['Key']) && isset($this->index[$column[0]['Key']])) {
-					$fields[$column[0]['Field']]['key'] = $this->index[$column[0]['Key']];
+				if (!empty($column[0]['Key']) 
+					&& isset($this->index[$column[0]['Key']])
+				) {
+					$fields[$column[0]['Field']]['key'] = 
+						$this->index[$column[0]['Key']];
 				}
 				foreach ($this->fieldParameters as $name => $value) {
 					if (!empty($column[0][$value['column']])) {
-						$fields[$column[0]['Field']][$name] = $column[0][$value['column']];
+						$fields[$column[0]['Field']][$name] = 
+							$column[0][$value['column']];
 					}
 				}
 				if (isset($fields[$column[0]['Field']]['collate'])) {
-					$charset = $this->getCharsetName($fields[$column[0]['Field']]['collate']);
+					$charset = $this->getCharsetName(
+						$fields[$column[0]['Field']]['collate']
+					);
+					
 					if ($charset) {
 						$fields[$column[0]['Field']]['charset'] = $charset;
 					}
@@ -158,16 +221,20 @@ class LegacyMysqlBase extends LegacyDboSource {
 		return $fields;
 	}
 
-/**
- * Generates and executes an SQL UPDATE statement for given model, fields, and values.
- *
- * @param Model $model
- * @param array $fields
- * @param array $values
- * @param mixed $conditions
- * @return array
- */
-	function update(&$model, $fields = array(), $values = null, $conditions = null) {
+	/**
+	 * Generates and executes an SQL UPDATE statement for given model, fields, 
+	 * and values.
+	 *
+	 * @param Model &$model
+	 * @param array $fields
+	 * @param array $values
+	 * @param mixed $conditions
+	 * 
+	 * @return array
+	 */
+	public function update(
+		&$model, $fields = array(), $values = null, $conditions = null
+	) {
 		if (!$this->_useAlias) {
 			return parent::update($model, $fields, $values, $conditions);
 		}
@@ -178,10 +245,13 @@ class LegacyMysqlBase extends LegacyDboSource {
 			$combined = array_combine($fields, $values);
 		}
 
-		$alias = $joins = false;
-		$fields = $this->_prepareUpdateFields($model, $combined, empty($conditions), !empty($conditions));
+		$alias  = $joins = false;
+		$fields = $this->_prepareUpdateFields(
+			$model, $combined, empty($conditions), !empty($conditions)
+		);
+		
 		$fields = implode(', ', $fields);
-		$table = $this->fullTableName($model);
+		$table  = $this->fullTableName($model);
 
 		if (!empty($conditions)) {
 			$alias = $this->name($model->alias);
@@ -189,27 +259,37 @@ class LegacyMysqlBase extends LegacyDboSource {
 				$joins = implode(' ', $this->_getJoins($model));
 			}
 		}
-		$conditions = $this->conditions($this->defaultConditions($model, $conditions, $alias), true, true, $model);
+		$conditions = $this->conditions(
+			$this->defaultConditions($model, $conditions, $alias),
+			true,
+			true,
+			$model
+		);
 
 		if ($conditions === false) {
 			return false;
 		}
 
-		if (!$this->execute($this->renderStatement('update', compact('table', 'alias', 'joins', 'fields', 'conditions')))) {
+		if (!$this->execute($this->renderStatement(
+			'update',
+			compact('table', 'alias', 'joins', 'fields', 'conditions'))
+		)) {
 			$model->onError();
 			return false;
 		}
 		return true;
 	}
 
-/**
- * Generates and executes an SQL DELETE statement for given id/conditions on given model.
- *
- * @param Model $model
- * @param mixed $conditions
- * @return boolean Success
- */
-	function delete(&$model, $conditions = null) {
+	/**
+	 * Generates and executes an SQL DELETE statement for given id/conditions on
+	 * given model.
+	 *
+	 * @param Model &$model
+	 * @param mixed $conditions
+	 * 
+	 * @return boolean Success
+	 */
+	public function delete(&$model, $conditions = null) {
 		if (!$this->_useAlias) {
 			return parent::delete($model, $conditions);
 		}
@@ -221,7 +301,7 @@ class LegacyMysqlBase extends LegacyDboSource {
 			$alias = $joins = false;
 		}
 		$complexConditions = false;
-		foreach ((array)$conditions as $key => $value) {
+		foreach ((array) $conditions as $key => $value) {
 			if (strpos($key, $model->alias) === false) {
 				$complexConditions = true;
 				break;
@@ -231,32 +311,47 @@ class LegacyMysqlBase extends LegacyDboSource {
 			$joins = false;
 		}
 
-		$conditions = $this->conditions($this->defaultConditions($model, $conditions, $alias), true, true, $model);
+		$conditions = $this->conditions(
+			$this->defaultConditions($model, $conditions, $alias),
+			true,
+			true,
+			$model
+		);
+		
 		if ($conditions === false) {
 			return false;
 		}
-		if ($this->execute($this->renderStatement('delete', compact('alias', 'table', 'joins', 'conditions'))) === false) {
+		
+		$sql = $this->renderStatement(
+			'delete',
+			compact('alias', 'table', 'joins', 'conditions')
+		);
+		
+		if ($this->execute($sql) === false) {
 			$model->onError();
 			return false;
 		}
 		return true;
 	}
 
-/**
- * Sets the database encoding
- *
- * @param string $enc Database encoding
- */
-	function setEncoding($enc) {
+	/**
+	 * Sets the database encoding
+	 *
+	 * @param string $enc Database encoding
+	 * 
+	 * @return result
+	 */
+	public function setEncoding($enc) {
 		return $this->_execute('SET NAMES ' . $enc) != false;
 	}
 
-/**
- * Returns an array of the indexes in given datasource name.
- *
- * @param string $model Name of model to inspect
- * @return array Fields in table. Keys are column and unique
- */
+	/**
+	 * Returns an array of the indexes in given datasource name.
+	 *
+	 * @param string $model Name of model to inspect
+	 * 
+	 * @return array Fields in table. Keys are column and unique
+	 */
 	function index($model) {
 		$index = array();
 		$table = $this->fullTableName($model);
@@ -269,14 +364,15 @@ class LegacyMysqlBase extends LegacyDboSource {
 			}
 			foreach ($keys as $i => $key) {
 				if (!isset($index[$key['Key_name']])) {
-					$col = array();
+					$col                               = array();
 					$index[$key['Key_name']]['column'] = $key['Column_name'];
-					$index[$key['Key_name']]['unique'] = intval($key['Non_unique'] == 0);
+					$index[$key['Key_name']]['unique'] = 
+						intval($key['Non_unique'] == 0);
 				} else {
 					if (!is_array($index[$key['Key_name']]['column'])) {
 						$col[] = $index[$key['Key_name']]['column'];
 					}
-					$col[] = $key['Column_name'];
+					$col[]                             = $key['Column_name'];
 					$index[$key['Key_name']]['column'] = $col;
 				}
 			}
@@ -284,17 +380,19 @@ class LegacyMysqlBase extends LegacyDboSource {
 		return $index;
 	}
 
-/**
- * Generate a MySQL Alter Table syntax for the given Schema comparison
- *
- * @param array $compare Result of a CakeSchema::compare()
- * @return array Array of alter statements to make.
- */
-	function alterSchema($compare, $table = null) {
+	/**
+	 * Generate a MySQL Alter Table syntax for the given Schema comparison
+	 *
+	 * @param array  $compare Result of a CakeSchema::compare()
+	 * @param String $table   Name of the table.
+	 * 
+	 * @return array Array of alter statements to make.
+	 */
+	public function alterSchema($compare, $table = null) {
 		if (!is_array($compare)) {
 			return false;
 		}
-		$out = '';
+		$out     = '';
 		$colList = array();
 		foreach ($compare as $curTable => $types) {
 			$indexes = $tableParameters = $colList = array();
@@ -313,46 +411,58 @@ class LegacyMysqlBase extends LegacyDboSource {
 						case 'add':
 							foreach ($column as $field => $col) {
 								$col['name'] = $field;
+								
 								$alter = 'ADD ' . $this->buildColumn($col);
 								if (isset($col['after'])) {
-									$alter .= ' AFTER ' . $this->name($col['after']);
+									$alter .= ' AFTER '
+										. $this->name($col['after']);
 								}
 								$colList[] = $alter;
 							}
-						break;
+							break;
 						case 'drop':
 							foreach ($column as $field => $col) {
 								$col['name'] = $field;
-								$colList[] = 'DROP ' . $this->name($field);
+								$colList[]   = 'DROP ' . $this->name($field);
 							}
-						break;
+							break;
 						case 'change':
 							foreach ($column as $field => $col) {
 								if (!isset($col['name'])) {
 									$col['name'] = $field;
 								}
-								$colList[] = 'CHANGE ' . $this->name($field) . ' ' . $this->buildColumn($col);
+								$colList[] = 'CHANGE ' . $this->name($field)
+										. ' ' . $this->buildColumn($col);
 							}
-						break;
+							break;
 					}
 				}
-				$colList = array_merge($colList, $this->_alterIndexes($curTable, $indexes));
-				$colList = array_merge($colList, $this->_alterTableParameters($curTable, $tableParameters));
+				$colList = array_merge(
+					$colList,
+					$this->_alterIndexes($curTable, $indexes)
+				);
+				$colList = array_merge(
+					$colList,
+					$this->_alterTableParameters($curTable, $tableParameters)
+				);
+				
 				$out .= "\t" . join(",\n\t", $colList) . ";\n\n";
 			}
 		}
 		return $out;
 	}
 
-/**
- * Generate a MySQL "drop table" statement for the given Schema object
- *
- * @param object $schema An instance of a subclass of CakeSchema
- * @param string $table Optional.  If specified only the table name given will be generated.
- *                      Otherwise, all tables defined in the schema are generated.
- * @return string
- */
-	function dropSchema($schema, $table = null) {
+	/**
+	 * Generate a MySQL "drop table" statement for the given Schema object
+	 *
+	 * @param object $schema An instance of a subclass of CakeSchema
+	 * @param string $table  Optional. If specified only the table name given 
+	 *                       will be generated. Otherwise, all tables defined in
+	 *                       the schema are generated.
+	 * 
+	 * @return string
+	 */
+	public function dropSchema($schema, $table = null) {
 		if (!is_a($schema, 'CakeSchema')) {
 			trigger_error(__('Invalid schema object', true), E_USER_WARNING);
 			return null;
@@ -360,38 +470,41 @@ class LegacyMysqlBase extends LegacyDboSource {
 		$out = '';
 		foreach ($schema->tables as $curTable => $columns) {
 			if (!$table || $table == $curTable) {
-				$out .= 'DROP TABLE IF EXISTS ' . $this->fullTableName($curTable) . ";\n";
+				$out .= 'DROP TABLE IF EXISTS ' 
+					. $this->fullTableName($curTable) . ";\n";
 			}
 		}
 		return $out;
 	}
 
-/**
- * Generate MySQL table parameter alteration statementes for a table.
- *
- * @param string $table Table to alter parameters for.
- * @param array $parameters Parameters to add & drop.
- * @return array Array of table property alteration statementes.
- * @todo Implement this method.
- */
-	function _alterTableParameters($table, $parameters) {
+	/**
+	 * Generate MySQL table parameter alteration statementes for a table.
+	 *
+	 * @param string $table Table to alter parameters for.
+	 * @param array $parameters Parameters to add & drop.
+	 * 
+	 * @return array Array of table property alteration statementes.
+	 * @todo Implement this method.
+	 */
+	public function _alterTableParameters($table, $parameters) {
 		if (isset($parameters['change'])) {
 			return $this->buildTableParameters($parameters['change']);
 		}
 		return array();
 	}
 
-/**
- * Generate MySQL index alteration statements for a table.
- *
- * @param string $table Table to alter indexes for
- * @param array $new Indexes to add and drop
- * @return array Index alteration statements
- */
-	function _alterIndexes($table, $indexes) {
+	/**
+	 * Generate MySQL index alteration statements for a table.
+	 *
+	 * @param string $table   Table to alter indexes for
+	 * @param array  $indexes Indexes to add and drop
+	 * 
+	 * @return array Index alteration statements
+	 */
+	public function _alterIndexes($table, $indexes) {
 		$alter = array();
 		if (isset($indexes['drop'])) {
-			foreach($indexes['drop'] as $name => $value) {
+			foreach ($indexes['drop'] as $name => $value) {
 				$out = 'DROP ';
 				if ($name == 'PRIMARY') {
 					$out .= 'PRIMARY KEY';
@@ -413,9 +526,15 @@ class LegacyMysqlBase extends LegacyDboSource {
 					}
 				}
 				if (is_array($value['column'])) {
-					$out .= 'KEY '. $name .' (' . implode(', ', array_map(array(&$this, 'name'), $value['column'])) . ')';
+					$out .= 'KEY ' . $name . ' ('
+						. implode(
+							', ', 
+							array_map(array(&$this, 'name'), $value['column'])
+						)
+						. ')';
 				} else {
-					$out .= 'KEY '. $name .' (' . $this->name($value['column']) . ')';
+					$out .= 'KEY ' . $name . ' (' 
+						. $this->name($value['column']) . ')';
 				}
 				$alter[] = $out;
 			}
@@ -423,14 +542,16 @@ class LegacyMysqlBase extends LegacyDboSource {
 		return $alter;
 	}
 
-/**
- * Inserts multiple values into a table
- *
- * @param string $table
- * @param string $fields
- * @param array $values
- */
-	function insertMulti($table, $fields, $values) {
+	/**
+	 * Inserts multiple values into a table
+	 *
+	 * @param string $table
+	 * @param string $fields
+	 * @param array  $values
+	 * 
+	 * @return void
+	 */
+	public function insertMulti($table, $fields, $values) {
 		$table = $this->fullTableName($table);
 		if (is_array($fields)) {
 			$fields = implode(', ', array_map(array(&$this, 'name'), $fields));
@@ -438,18 +559,22 @@ class LegacyMysqlBase extends LegacyDboSource {
 		$values = implode(', ', $values);
 		$this->query("INSERT INTO {$table} ({$fields}) VALUES {$values}");
 	}
-/**
- * Returns an detailed array of sources (tables) in the database.
- *
- * @param string $name Table name to get parameters 
- * @return array Array of tablenames in the database
- */
-	function listDetailedSources($name = null) {
+
+	/**
+	 * Returns an detailed array of sources (tables) in the database.
+	 *
+	 * @param string $name Table name to get parameters 
+	 * 
+	 * @return array Array of tablenames in the database
+	 */
+	public function listDetailedSources($name = null) {
 		$condition = '';
 		if (is_string($name)) {
 			$condition = ' LIKE ' . $this->value($name);
 		}
-		$result = $this->query('SHOW TABLE STATUS FROM ' . $this->name($this->config['database']) . $condition . ';');
+		$result = $this->query('SHOW TABLE STATUS FROM ' 
+			. $this->name($this->config['database']) . $condition . ';');
+		
 		if (!$result) {
 			return array();
 		} else {
@@ -457,7 +582,10 @@ class LegacyMysqlBase extends LegacyDboSource {
 			foreach ($result as $row) {
 				$tables[$row['TABLES']['Name']] = $row['TABLES'];
 				if (!empty($row['TABLES']['Collation'])) {
-					$charset = $this->getCharsetName($row['TABLES']['Collation']);
+					$charset = $this->getCharsetName(
+						$row['TABLES']['Collation']
+					);
+					
 					if ($charset) {
 						$tables[$row['TABLES']['Name']]['charset'] = $charset;
 					}
@@ -470,22 +598,23 @@ class LegacyMysqlBase extends LegacyDboSource {
 		}
 	}
 
-/**
- * Converts database-layer column types to basic types
- *
- * @param string $real Real database-layer column type (i.e. "varchar(255)")
- * @return string Abstract column type (i.e. "string")
- */
-	function column($real) {
+	/**
+	 * Converts database-layer column types to basic types
+	 *
+	 * @param string $real Real database-layer column type (i.e. "varchar(255)")
+	 * 
+	 * @return string Abstract column type (i.e. "string")
+	 */
+	public function column($real) {
 		if (is_array($real)) {
 			$col = $real['name'];
 			if (isset($real['limit'])) {
-				$col .= '('.$real['limit'].')';
+				$col .= '(' . $real['limit'] . ')';
 			}
 			return $col;
 		}
 
-		$col = str_replace(')', '', $real);
+		$col   = str_replace(')', '', $real);
 		$limit = $this->length($real);
 		if (strpos($col, '(') !== false) {
 			list($col, $vals) = explode('(', $col);
@@ -509,7 +638,10 @@ class LegacyMysqlBase extends LegacyDboSource {
 		if (strpos($col, 'blob') !== false || $col == 'binary') {
 			return 'binary';
 		}
-		if (strpos($col, 'float') !== false || strpos($col, 'double') !== false || strpos($col, 'decimal') !== false) {
+		if (strpos($col, 'float') !== false
+			|| strpos($col, 'double') !== false
+			|| strpos($col, 'decimal') !== false
+		) {
 			return 'float';
 		}
 		if (strpos($col, 'enum') !== false) {
@@ -517,4 +649,5 @@ class LegacyMysqlBase extends LegacyDboSource {
 		}
 		return 'text';
 	}
+
 }
