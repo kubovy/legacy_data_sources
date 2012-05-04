@@ -43,7 +43,11 @@ class LegacyDboSource extends LegacyDataSource {
 	 *
 	 * @var array
 	 */
-	public $index = array('PRI' => 'primary', 'MUL' => 'index', 'UNI' => 'unique');
+	public $index = array(
+		'PRI' => 'primary',
+		'MUL' => 'index',
+		'UNI' => 'unique'
+	);
 
 	/**
 	 * Database keyword used to assign aliases to identifiers.
@@ -203,7 +207,8 @@ class LegacyDboSource extends LegacyDataSource {
 	 *
 	 * @param string $identifier
 	 *
-	 * @return object An object representing a database identifier to be used in a query
+	 * @return object An object representing a database identifier to be used in
+	 *                a query
 	 */
 	public function identifier($identifier) {
 		$obj = new stdClass();
@@ -468,7 +473,10 @@ class LegacyDboSource extends LegacyDataSource {
 				if (strpos($field, $this->virtualFieldSeparator) === false) {
 					continue;
 				}
-				list($alias, $virtual) = explode($this->virtualFieldSeparator, $field);
+				list($alias, $virtual) = explode(
+					$this->virtualFieldSeparator,
+					$field
+				);
 
 				if (!ClassRegistry::isKeySet($alias)) {
 					return;
@@ -571,7 +579,9 @@ class LegacyDboSource extends LegacyDataSource {
 			return $return;
 		}
 		$data = trim($data);
-		if (preg_match('/^[\w-]+(?:\.[^ \*]*)*$/', $data)) { // string, string.string
+		
+		// string, string.string
+		if (preg_match('/^[\w-]+(?:\.[^ \*]*)*$/', $data)) {
 			if (strpos($data, '.') === false) { // string
 				return $this->cacheMethod(
 					__FUNCTION__,

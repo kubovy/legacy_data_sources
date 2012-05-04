@@ -81,7 +81,7 @@ class LegacyMysql extends LegacyMysqlBase {
 			$this->setEncoding($config['encoding']);
 		}
 
-		$this->_useAlias = (bool)version_compare(
+		$this->_useAlias = (bool) version_compare(
 			mysql_get_server_info($this->connection), 
 			"4.1", 
 			">="
@@ -182,7 +182,7 @@ class LegacyMysql extends LegacyMysqlBase {
 
 		switch ($column) {
 			case 'boolean':
-				return $this->boolean((bool)$data);
+				return $this->boolean((bool) $data);
 				break;
 			case 'integer':
 			case 'float':
@@ -248,7 +248,8 @@ class LegacyMysql extends LegacyMysqlBase {
 	/**
 	 * Returns the ID generated from the previous INSERT operation.
 	 *
-	 * @param unknown_type $source
+	 * @param unknown_type $source Source.
+	 * 
 	 * @return in
 	 */
 	public function lastInsertId($source = null) {
@@ -267,7 +268,7 @@ class LegacyMysql extends LegacyMysqlBase {
 	/**
 	 * Enter description here...
 	 *
-	 * @param unknown_type $results
+	 * @param unknown_type &$results Results.
 	 * 
 	 * @return void
 	 */

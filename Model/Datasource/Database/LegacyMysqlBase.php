@@ -71,7 +71,8 @@ class LegacyMysqlBase extends LegacyDboSource {
 	);
 
 	/**
-	 * List of engine specific additional field parameters used on table creating
+	 * List of engine specific additional field parameters used on table
+	 * creating
 	 *
 	 * @var array
 	 * @access public
@@ -225,12 +226,12 @@ class LegacyMysqlBase extends LegacyDboSource {
 	 * Generates and executes an SQL UPDATE statement for given model, fields, 
 	 * and values.
 	 *
-	 * @param Model &$model
-	 * @param array $fields
-	 * @param array $values
-	 * @param mixed $conditions
+	 * @param Model &$model     Model.
+	 * @param Array $fields     Fields.
+	 * @param Array $values     Values.
+	 * @param mixed $conditions Conditions.
 	 * 
-	 * @return array
+	 * @return Boolean True if success.
 	 */
 	public function update(
 		&$model, $fields = array(), $values = null, $conditions = null
@@ -245,7 +246,8 @@ class LegacyMysqlBase extends LegacyDboSource {
 			$combined = array_combine($fields, $values);
 		}
 
-		$alias  = $joins = false;
+		$alias = $joins = false;
+		
 		$fields = $this->_prepareUpdateFields(
 			$model, $combined, empty($conditions), !empty($conditions)
 		);
@@ -284,8 +286,8 @@ class LegacyMysqlBase extends LegacyDboSource {
 	 * Generates and executes an SQL DELETE statement for given id/conditions on
 	 * given model.
 	 *
-	 * @param Model &$model
-	 * @param mixed $conditions
+	 * @param Model &$model     Model.
+	 * @param mixed $conditions Conditions.
 	 * 
 	 * @return boolean Success
 	 */
@@ -397,7 +399,8 @@ class LegacyMysqlBase extends LegacyDboSource {
 		foreach ($compare as $curTable => $types) {
 			$indexes = $tableParameters = $colList = array();
 			if (!$table || $table == $curTable) {
-				$out .= 'ALTER TABLE ' . $this->fullTableName($curTable) . " \n";
+				$out .= 'ALTER TABLE ' . $this->fullTableName($curTable)
+						. " \n";
 				foreach ($types as $type => $column) {
 					if (isset($column['indexes'])) {
 						$indexes[$type] = $column['indexes'];
@@ -480,8 +483,8 @@ class LegacyMysqlBase extends LegacyDboSource {
 	/**
 	 * Generate MySQL table parameter alteration statementes for a table.
 	 *
-	 * @param string $table Table to alter parameters for.
-	 * @param array $parameters Parameters to add & drop.
+	 * @param string $table      Table to alter parameters for.
+	 * @param array  $parameters Parameters to add & drop.
 	 * 
 	 * @return array Array of table property alteration statementes.
 	 * @todo Implement this method.
@@ -545,9 +548,9 @@ class LegacyMysqlBase extends LegacyDboSource {
 	/**
 	 * Inserts multiple values into a table
 	 *
-	 * @param string $table
-	 * @param string $fields
-	 * @param array  $values
+	 * @param string $table  Table.
+	 * @param string $fields Fields.
+	 * @param array  $values Values.
 	 * 
 	 * @return void
 	 */

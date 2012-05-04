@@ -202,7 +202,7 @@ class LegacyDataSource extends Object {
 	/**
 	 * Caches/returns cached results for child instances
 	 *
-	 * @param mixed $data 
+	 * @param mixed $data Data.
 	 * 
 	 * @return array Array of sources available in this datasource.
 	 */
@@ -247,7 +247,7 @@ class LegacyDataSource extends Object {
 	/**
 	 * Returns a Model description (metadata) or null if none found.
 	 *
-	 * @param Model &$model
+	 * @param Model &$model Model.
 	 * 
 	 * @return array Array of Metadata for the $model
 	 */
@@ -375,7 +375,7 @@ class LegacyDataSource extends Object {
 	/**
 	 * Returns the ID generated from the previous INSERT operation.
 	 *
-	 * @param unknown_type $source
+	 * @param unknown_type $source Source.
 	 * 
 	 * @return mixed Last ID key generated in previous INSERT
 	 */
@@ -386,7 +386,7 @@ class LegacyDataSource extends Object {
 	/**
 	 * Returns the number of rows returned by last operation.
 	 *
-	 * @param unknown_type $source
+	 * @param unknown_type $source Source.
 	 * 
 	 * @return integer Number of rows returned by last operation
 	 */
@@ -397,7 +397,7 @@ class LegacyDataSource extends Object {
 	/**
 	 * Returns the number of rows affected by last query.
 	 *
-	 * @param unknown_type $source
+	 * @param unknown_type $source Source.
 	 * 
 	 * @return integer Number of rows affected by last query.
 	 */
@@ -483,12 +483,12 @@ class LegacyDataSource extends Object {
 	 * @param array        $data        Array of data with values that will be
 	 *                                  inserted in placeholders.
 	 * @param string       $association Name of association model being replaced
-	 * @param unknown_type $assocData
+	 * @param unknown_type $assocData   Accosiated data.
 	 * @param Model        &$model      Instance of the model to replace 
 	 *                                  $__cakeID__$
 	 * @param Model        &$linkModel  Instance of model to replace
 	 *                                  $__cakeForeignKey__$
-	 * @param array        $stack       
+	 * @param array        $stack       Stack.
 	 * 
 	 * @return string String of query data with placeholders replaced.
 	 * @todo Remove and refactor $assocData, ensure uses of the method have the 

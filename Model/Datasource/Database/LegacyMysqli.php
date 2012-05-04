@@ -269,9 +269,9 @@ class LegacyMysqli extends LegacyMysqlBase {
 	/**
 	 * Returns the ID generated from the previous INSERT operation.
 	 *
-	 * @param unknown_type $source
+	 * @param unknown_type $source Source.
 	 * 
-	 * @return in
+	 * @return Integer Last inserted ID or null.
 	 */
 	public function lastInsertId($source = null) {
 		$id = $this->fetchRow('SELECT LAST_INSERT_ID() AS insertID', false);
@@ -288,7 +288,7 @@ class LegacyMysqli extends LegacyMysqlBase {
 	/**
 	 * Enter description here...
 	 *
-	 * @param unknown_type $results
+	 * @param unknown_type &$results Restuls.
 	 * 
 	 * @return void
 	 */
